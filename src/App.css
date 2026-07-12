@@ -1,0 +1,88 @@
+.app-shell {
+  width: min(100% - 40px, 960px);
+  min-height: 100svh;
+  margin: 0 auto;
+  display: grid;
+  align-content: center;
+  gap: 32px;
+}
+
+.intro {
+  display: grid;
+  gap: 16px;
+}
+
+.eyebrow {
+  width: fit-content;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 6px 12px;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.intro h1 {
+  margin: 0;
+  max-width: 760px;
+  color: var(--text);
+  font-size: 6.5rem;
+  line-height: 0.95;
+}
+
+.intro p {
+  max-width: 620px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.1rem;
+}
+
+.status-panel {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.status-panel div {
+  display: grid;
+  gap: 8px;
+  padding: 20px;
+}
+
+.status-panel div + div {
+  border-left: 1px solid var(--border);
+}
+
+.status-panel span {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.status-panel strong {
+  color: var(--text);
+  font-size: 1rem;
+}
+
+@media (max-width: 700px) {
+  .app-shell {
+    width: min(100% - 32px, 960px);
+    padding: 48px 0;
+  }
+
+  .status-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .status-panel div + div {
+    border-top: 1px solid var(--border);
+    border-left: 0;
+  }
+
+  .intro h1 {
+    font-size: 3.75rem;
+  }
+}
