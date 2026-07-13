@@ -2,7 +2,7 @@
 
 ## Project Summary
 
-Forty5Park is currently a fresh React app scaffolded with Vite. The product direction is still pending, so the app has a neutral starter shell instead of a feature-specific interface.
+Forty5Park is currently a React app scaffolded with Vite. The first implemented screen is the Figma-derived market dashboard with a dark geolocalization map background and a left-side market control panel.
 
 The intended product includes a building geolocalization component that lives in the background of the interface, plus a sidepanel used to control the contents of that map.
 
@@ -10,12 +10,31 @@ The intended product includes a building geolocalization component that lives in
 
 - Dashboard Figma node: `https://www.figma.com/design/ti7TCH6aLLutT4OIAvSQec/portfolio-sourcefile?node-id=103-2119&t=T3bW2CZUynALhJ5s-11`
 - Sidepanel Figma node: `https://www.figma.com/design/ti7TCH6aLLutT4OIAvSQec/portfolio-sourcefile?node-id=106-588&t=T3bW2CZUynALhJ5s-11`
-- Figma implementation-grade inspection is currently partially blocked because the Figma design-context tool still requires editor access. The browser can view the file, so visual review is possible, but exact layer metadata, variables, assets, and generated reference code are not available yet.
+- Figma implementation-grade inspection is now available through the Figma design-context tool for the dashboard and sidepanel nodes.
+
+## Figma Implementation Notes
+
+- Dashboard node `103:2119` is named `dashboard-market` and is `1440 x 900`.
+- The background map frame is `1440 x 900`; the map image itself is positioned at `x: -147`, `y: -42`, `w: 1734`, `h: 942`.
+- Sidepanel node `106:588` is named `markets-screen`, positioned at `x: 16`, `y: 16`, with size `320 x 868`.
+- Collapsed sidepanel node `116:584` is named `header-bar`, with size `200 x 48`.
+- Sidepanel background is `neutral/1000 - dark-main` (`#1d1d1d`) with `neutral/650 - card-border` (`#363636`) and `8px` radius.
+- The map/dashboard background uses `neutral/1100 - dark-bg` (`#131313`).
+- Primary brand/accent color is `brand/main` (`#7f56d9`).
+- Card background is `neutral/800 - card-bg` (`#292929`).
+- Text colors include white (`#ffffff`), `neutral/300` (`#999999`), and `neutral/200` (`#bfbfbf`).
+- Typography uses Inter via the design token `font/body`.
+- Main text styles observed: `14px/1.7` regular, `12px/1.7` regular, `12px/1.4` regular, `12px/1.7` bold, and `10px/1.7` regular.
+- Spacing tokens observed: `spacing-md = 8`, `spacing-xs = 4`.
+- Sidepanel layout: `48px` top header, `44px` primary tabs, `40px` secondary tabs, then a scrollable market list.
+- Market cards are `288px x 61px`, with `16px 12px` internal padding, `4px` radius, card border `#363636`, and card fill `#292929`.
+- Do not add Tailwind. Figma returned React/Tailwind-like reference code, but this project currently uses plain React plus CSS files.
 
 ## Current Stack
 
 - React 19
 - Vite 8
+- MapLibre GL for the interactive map background
 - Oxlint
 - Plain CSS modules by file import, using `src/App.css` and `src/index.css`
 
@@ -29,9 +48,11 @@ The intended product includes a building geolocalization component that lives in
 ## Project Structure
 
 - `src/main.jsx` mounts the React app.
-- `src/App.jsx` contains the current starter screen.
-- `src/App.css` contains component-level styles for the starter screen.
+- `src/App.jsx` contains the dashboard and sidepanel component structure.
+- `src/App.css` contains component-level styles for the dashboard and sidepanel.
 - `src/index.css` contains global CSS variables and base document styles.
+- `src/assets/map-dark.png` is the local Figma map image asset used as the dashboard background.
+- `src/assets/brand-icon.svg` is the local Figma brand icon asset used in the sidepanel header.
 - `public/` contains static assets from the Vite scaffold.
 - `dist/` is generated build output and should not be edited by hand.
 
@@ -42,8 +63,16 @@ The intended product includes a building geolocalization component that lives in
 - Lint and production build passed after setup.
 - This folder was not a git repository at the time of initial setup.
 - The local repository was later pushed to `https://github.com/analdoagm-png/forty5park`.
-- Visual Figma review shows a dark, map-first dashboard at `1440 x 900`, with the sidepanel docked on the left over a full-background map.
-- The sidepanel appears to use a compact dark UI with top icon controls, primary tabs (`Markets`, `Library`, `Analysis`), secondary tabs (`MSA`, `Trends`, `Highlights`), filter chips (`All`, `Active`, `Restricted`), search/action controls, and a vertical list of market/property cards.
+- Figma design-context access is working for the dashboard and sidepanel nodes.
+- The design shows a dark, map-first dashboard at `1440 x 900`, with the sidepanel docked on the left over a full-background map.
+- The sidepanel uses a compact dark UI with top icon controls, primary tabs (`Markets`, `Library`, `Analysis`), secondary tabs (`MSA`, `Trends`, `Highlights`), filter chips (`All`, `Active`, `Restricted`), search/action controls, and a vertical list of market/property cards.
+- The dashboard and sidepanel have been implemented in plain React/CSS without adding Tailwind.
+- Visual QA at `1440 x 900` matched the Figma geometry: sidepanel at `16,16` with `320 x 868`, map image at `-147,-42` with `1734 x 942`.
+- The static Figma map has been replaced by an interactive MapLibre GL map using a dark/grayscale CARTO raster basemap, constrained to a continental US viewport/bounds.
+- `src/assets/map-dark.png` remains as a local fallback behind the live map layer.
+- Market cards and map markers are wired together with mock coordinates; selecting a card highlights it and flies the map to that point.
+- The sidepanel can collapse via the sidepanel icon. Expanded state uses the full panel; collapsed state preserves only the `200 x 48` header bar and fades/slides the body out with a subtle transition.
+- Primary, secondary, and filter tabs are stateful with clean hover/press feedback and independent active states.
 
 ## Agent Guidance
 
@@ -58,5 +87,9 @@ The intended product includes a building geolocalization component that lives in
 - 2026-07-12: Created a Vite React project as the baseline.
 - 2026-07-12: Kept the UI intentionally generic pending further requirements.
 - 2026-07-12: Added this `AGENTS.md` as the living project summary and agent handoff file.
-- 2026-07-13: Recorded the dashboard and sidepanel Figma references. Design extraction is pending Figma file access.
-- 2026-07-13: Retried Figma review. Browser access works for visual review, but Figma inspect/design-context APIs still require editor access.
+- 2026-07-13: Recorded the dashboard and sidepanel Figma references.
+- 2026-07-13: Retried Figma review. Browser access worked first, then editor access was granted and Figma design-context extraction succeeded.
+- 2026-07-13: Implemented the Figma dashboard and sidepanel in React/CSS with local map and brand assets.
+- 2026-07-13: Added MapLibre GL interactive map background, US bounds, dark CARTO tiles, and mock market marker/card interaction.
+- 2026-07-13: Added collapsed sidepanel navigation state based on Figma node `116:584`, toggled from the sidepanel icon.
+- 2026-07-13: Added interactive hover/click/active states to the sidepanel tab groups.

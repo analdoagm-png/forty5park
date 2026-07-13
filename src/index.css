@@ -1,15 +1,20 @@
 :root {
-  --background: #faf9f5;
-  --surface: #ffffff;
-  --text: #171717;
-  --muted: #60646c;
-  --border: #dedbd2;
+  --brand-main: #7f56d9;
+  --brand-500: #9e77ed;
+  --neutral-0: #ffffff;
+  --neutral-200: #bfbfbf;
+  --neutral-300: #999999;
+  --neutral-600: #3f3f3f;
+  --neutral-650: #363636;
+  --neutral-800: #292929;
+  --neutral-1000: #1d1d1d;
+  --neutral-1100: #131313;
 
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
     sans-serif;
-  color: var(--text);
-  background: var(--background);
+  color: var(--neutral-0);
+  background: var(--neutral-1100);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -27,7 +32,14 @@ body,
 }
 
 body {
-  margin: 0;
   min-width: 320px;
-  background: var(--background);
+  margin: 0;
+  background: var(--neutral-1100);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
 }
