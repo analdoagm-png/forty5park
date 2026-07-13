@@ -8,50 +8,85 @@ import './App.css'
 const primaryTabs = ['Markets', 'Library', 'Analysis']
 const segmentTabs = ['MSA', 'Trends', 'Highlights']
 const filters = ['All', 'Active', 'Restricted']
+const detailTabs = ['Portfolios (3)', 'Buy Boxes', 'Developments (5)']
+const portfolioItems = ['Core Income', 'Growth Watchlist', 'Value Add Pipeline']
 
 const markets = [
   {
     name: 'Michigan',
-    address: '3600 W Sovereign Path, Lecanto, FL (28.8419 N, 82.4811 W)',
-    coordinates: [-82.4811, 28.8419],
+    city: 'Detroit',
+    address: 'Detroit, MI (42.3314 N, 83.0458 W)',
+    coordinates: [-83.0458, 42.3314],
   },
   {
     name: 'Georgia',
-    address: '201 W Main St, Tavares, FL (28.8058 N, 81.7342 W)',
-    coordinates: [-81.7342, 28.8058],
-    count: 4,
+    city: 'Atlanta',
+    address: 'Atlanta, GA (33.7490 N, 84.3880 W)',
+    coordinates: [-84.388, 33.749],
   },
   {
     name: 'Texas',
-    address: '255 N Kentucky Ave, Lakeland, FL (28.0406 N, 81.9499 W)',
-    coordinates: [-81.9499, 28.0406],
+    city: 'Houston',
+    address: 'Houston, TX (29.7604 N, 95.3698 W)',
+    coordinates: [-95.3698, 29.7604],
   },
   {
     name: 'Illinois',
-    address: '2295 Victoria Ave, Fort Myers, FL (26.6406 N, 81.8723 W)',
-    coordinates: [-81.8723, 26.6406],
+    city: 'Chicago',
+    address: 'Chicago, IL (41.8781 N, 87.6298 W)',
+    coordinates: [-87.6298, 41.8781],
   },
   {
     name: 'California',
-    address: '1301 Riverplace Blvd, Jacksonville, FL (30.3219 N, 81.6557 W)',
-    coordinates: [-81.6557, 30.3219],
+    city: 'Los Angeles',
+    address: 'Los Angeles, CA (34.0522 N, 118.2437 W)',
+    coordinates: [-118.2437, 34.0522],
   },
   {
     name: 'New York',
-    address: '444 Biscayne Blvd, Miami, FL (25.7743 N, 80.1937 W)',
-    coordinates: [-80.1937, 25.7743],
+    city: 'New York City',
+    address: 'New York City, NY (40.7128 N, 74.0060 W)',
+    coordinates: [-74.006, 40.7128],
   },
   {
     name: 'Arizona',
-    address: '110 SE 25th Ave, Ocala, FL (29.1872 N, 82.1406 W)',
-    coordinates: [-82.1406, 29.1872],
+    city: 'Phoenix',
+    address: 'Phoenix, AZ (33.4484 N, 112.0740 W)',
+    coordinates: [-112.074, 33.4484],
   },
 ]
+
+const highlightedStateNames = markets.map((market) => market.name)
 
 const usBounds = [
   [-127.5, 23.5],
   [-65, 50.5],
 ]
+
+function getGeometryBounds(geometry) {
+  let bounds = null
+
+  const extendBounds = (coordinates) => {
+    if (!Array.isArray(coordinates)) {
+      return
+    }
+
+    if (typeof coordinates[0] === 'number' && typeof coordinates[1] === 'number') {
+      if (!bounds) {
+        bounds = new maplibregl.LngLatBounds(coordinates, coordinates)
+        return
+      }
+
+      bounds.extend(coordinates)
+      return
+    }
+
+    coordinates.forEach(extendBounds)
+  }
+
+  extendBounds(geometry?.coordinates)
+  return bounds
+}
 
 const darkRasterStyle = {
   version: 8,
@@ -156,15 +191,48 @@ function TabList({ items, activeItem, onChange, variant }) {
   )
 }
 
-function InteractiveMap({ activeMarket, isPanelCollapsed, onSelectMarket }) {
+function UnitIcon() {
+  return (
+    <svg viewBox="0 0 12 12" aria-hidden="true">
+      <path d="M10.5 0.75H6C5.80115 0.750199 5.6105 0.82928 5.46989 0.969889C5.32928 1.1105 5.2502 1.30115 5.25 1.5V5.25H1.5C1.30115 5.2502 1.1105 5.32928 0.969889 5.46989C0.82928 5.6105 0.750199 5.80115 0.75 6V11.25H11.25V1.5C11.2498 1.30115 11.1707 1.1105 11.0301 0.969889C10.8895 0.82928 10.6989 0.750199 10.5 0.75ZM3.375 10.5V7.875H4.875V10.5H3.375ZM10.5 10.5H5.625V7.5C5.625 7.40054 5.58549 7.30516 5.51516 7.23483C5.44484 7.16451 5.34946 7.125 5.25 7.125H3C2.90054 7.125 2.80516 7.16451 2.73484 7.23483C2.66451 7.30516 2.625 7.40054 2.625 7.5V10.5H1.5V6H6V1.5H10.5V10.5Z" />
+      <path d="M6.75 3H7.5V3.75H6.75V3ZM9 3H9.75V3.75H9V3ZM6.75 5.25H7.5V6H6.75V5.25ZM9 5.25H9.75V6H9V5.25ZM6.75 7.5H7.5V8.25H6.75V7.5ZM9 7.5H9.75V8.25H9V7.5Z" />
+    </svg>
+  )
+}
+
+function CalendarIcon() {
+  return (
+    <svg viewBox="0 0 12 12" aria-hidden="true">
+      <path
+        d="M3.25 1.5v1m5.5-1v1m-6.5 1.25h7.5m-7.5-1.25h7.5c.41 0 .75.34.75.75v6c0 .41-.34.75-.75.75h-7.5a.75.75 0 0 1-.75-.75v-6c0-.41.34-.75.75-.75Z"
+        fill="none"
+        stroke="currentColor"
+      />
+    </svg>
+  )
+}
+
+function ChevronRightIcon() {
+  return (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <path d="m6 3 5 5-5 5-.82-.82L9.36 8 5.18 3.82 6 3Z" />
+    </svg>
+  )
+}
+
+function InteractiveMap({ activeMarket, isPanelCollapsed, isDetailOpen }) {
   const mapContainerRef = useRef(null)
   const mapRef = useRef(null)
-  const markersRef = useRef([])
+  const stateBoundsRef = useRef(new Map())
+  const [stateBoundsReady, setStateBoundsReady] = useState(false)
 
   useEffect(() => {
     if (!mapContainerRef.current || mapRef.current) {
       return
     }
+
+    let isDisposed = false
+    const stateBoundsByName = stateBoundsRef.current
 
     const map = new maplibregl.Map({
       attributionControl: false,
@@ -191,35 +259,64 @@ function InteractiveMap({ activeMarket, isPanelCollapsed, onSelectMarket }) {
       'bottom-right',
     )
 
-    markets.forEach((market) => {
-      const markerElement = document.createElement('button')
-      markerElement.className = 'map-marker'
-      markerElement.type = 'button'
-      markerElement.setAttribute('aria-label', `Show ${market.name}`)
+    map.on('load', async () => {
+      const statesResponse = await fetch('/us-states.geojson')
+      const statesData = await statesResponse.json()
 
-      markerElement.addEventListener('click', () => {
-        onSelectMarket(market)
+      if (isDisposed) {
+        return
+      }
+
+      statesData.features.forEach((feature) => {
+        const stateName = feature.properties?.name
+        const bounds = getGeometryBounds(feature.geometry)
+
+        if (stateName && bounds) {
+          stateBoundsByName.set(stateName, bounds)
+        }
       })
 
-      const marker = new maplibregl.Marker({
-        anchor: 'center',
-        element: markerElement,
+      map.addSource('us-states', {
+        type: 'geojson',
+        data: statesData,
       })
-        .setLngLat(market.coordinates)
-        .addTo(map)
 
-      markersRef.current.push({ marketName: market.name, marker, markerElement })
+      map.addLayer({
+        id: 'highlighted-state-fill',
+        type: 'fill',
+        source: 'us-states',
+        filter: ['in', ['get', 'name'], ['literal', highlightedStateNames]],
+        paint: {
+          'fill-color': '#7f56d9',
+          'fill-opacity': 0.5,
+        },
+      })
+
+      map.addLayer({
+        id: 'highlighted-state-line',
+        type: 'line',
+        source: 'us-states',
+        filter: ['in', ['get', 'name'], ['literal', highlightedStateNames]],
+        paint: {
+          'line-blur': 0.2,
+          'line-color': '#7f56d9',
+          'line-opacity': 1,
+          'line-width': ['interpolate', ['linear'], ['zoom'], 3, 1, 6, 1.35],
+        },
+      })
+
+      setStateBoundsReady(true)
     })
 
     mapRef.current = map
 
     return () => {
-      markersRef.current.forEach(({ marker }) => marker.remove())
-      markersRef.current = []
+      isDisposed = true
       map.remove()
       mapRef.current = null
+      stateBoundsByName.clear()
     }
-  }, [onSelectMarket])
+  }, [])
 
   useEffect(() => {
     if (!mapRef.current) {
@@ -231,26 +328,36 @@ function InteractiveMap({ activeMarket, isPanelCollapsed, onSelectMarket }) {
     if (!activeMarket) {
       mapRef.current.fitBounds(usBounds, {
         duration: 360,
-        padding: { top: 56, right: 40, bottom: 36, left: isPanelCollapsed ? 216 : 336 },
+        padding: {
+          top: 56,
+          right: isDetailOpen ? 352 : 40,
+          bottom: 36,
+          left: isPanelCollapsed ? 216 : 336,
+        },
       })
     }
-  }, [activeMarket, isPanelCollapsed])
+  }, [activeMarket, isDetailOpen, isPanelCollapsed])
 
   useEffect(() => {
-    markersRef.current.forEach(({ marketName, markerElement }) => {
-      markerElement.classList.toggle('is-active', marketName === activeMarket?.name)
-    })
+    if (activeMarket && mapRef.current && stateBoundsReady) {
+      const stateBounds = stateBoundsRef.current.get(activeMarket.name)
 
-    if (activeMarket && mapRef.current) {
-      mapRef.current.easeTo({
-        center: activeMarket.coordinates,
+      if (!stateBounds) {
+        return
+      }
+
+      mapRef.current.fitBounds(stateBounds, {
         duration: 700,
-        essential: true,
-        offset: [isPanelCollapsed ? 100 : 160, 0],
-        zoom: 5.9,
+        maxZoom: 6.25,
+        padding: {
+          top: 96,
+          right: isDetailOpen ? 384 : 96,
+          bottom: 96,
+          left: isPanelCollapsed ? 240 : 384,
+        },
       })
     }
-  }, [activeMarket, isPanelCollapsed])
+  }, [activeMarket, isDetailOpen, isPanelCollapsed, stateBoundsReady])
 
   return (
     <div className="interactive-map" aria-label="Interactive US market map">
@@ -270,9 +377,89 @@ function MarketCard({ market, isActive, onSelect }) {
         {market.count ? <span className="market-tag">{market.count}</span> : null}
       </div>
       <button className="market-card-hit-area" type="button" onClick={() => onSelect(market)}>
-        <span>Show {market.name} on map</span>
+        <span>Show {market.name} vector on map</span>
       </button>
     </article>
+  )
+}
+
+function DetailTabList({ activeTab, onChange }) {
+  return (
+    <div className="detail-tabs" role="tablist" aria-label="Market detail categories">
+      {detailTabs.map((tab) => (
+        <button
+          className={`detail-tab ${tab === activeTab ? 'is-active' : ''}`}
+          key={tab}
+          onClick={() => onChange(tab)}
+          type="button"
+          role="tab"
+          aria-selected={tab === activeTab}
+        >
+          {tab}
+        </button>
+      ))}
+    </div>
+  )
+}
+
+function MarketDetailPanel({ market }) {
+  const [activeTab, setActiveTab] = useState(detailTabs[0])
+
+  if (!market) {
+    return null
+  }
+
+  return (
+    <aside className="market-detail-panel" aria-label={`${market.name} market details`}>
+      <header className="market-detail-header">
+        <h1>{market.name}</h1>
+        <button className="detail-pill-button" type="button">
+          <UnitIcon />
+          <span>View Listings</span>
+        </button>
+      </header>
+
+      <div className="market-detail-content">
+        <section className="detail-section" aria-labelledby="outlook-heading">
+          <h2 id="outlook-heading">Outlook</h2>
+          <article className="outlook-card">
+            <div className="ranking-badge">
+              <span className="ranking-dot" />
+              <span>#1</span>
+            </div>
+            <h3>High-Growth Builders</h3>
+            <p className="detail-label">Description</p>
+            <p className="outlook-description">
+              Strong population growth + heavy housing starts. Healthy cap rates across
+              multifamily/single-family.
+            </p>
+            <button className="detail-pill-button detail-pill-muted" type="button">
+              23 Markets
+            </button>
+          </article>
+        </section>
+
+        <section className="detail-section" aria-labelledby="items-heading">
+          <h2 id="items-heading">Your Items</h2>
+          <DetailTabList activeTab={activeTab} onChange={setActiveTab} />
+
+          <div className="portfolio-list">
+            {portfolioItems.map((item) => (
+              <button className="portfolio-item" key={item} type="button">
+                <span className="portfolio-info">
+                  <strong>{item}</strong>
+                  <span>
+                    <CalendarIcon />
+                    Last Updated: Aug 12, 2025
+                  </span>
+                </span>
+                <ChevronRightIcon />
+              </button>
+            ))}
+          </div>
+        </section>
+      </div>
+    </aside>
   )
 }
 
@@ -366,8 +553,8 @@ function App() {
     <main className="dashboard-shell" aria-label="Forty5Park market dashboard">
       <InteractiveMap
         activeMarket={activeMarket}
+        isDetailOpen={Boolean(activeMarket)}
         isPanelCollapsed={isPanelCollapsed}
-        onSelectMarket={setActiveMarket}
       />
       <MarketsPanel
         activeMarket={activeMarket}
@@ -375,6 +562,7 @@ function App() {
         onSelectMarket={setActiveMarket}
         onToggleCollapsed={() => setIsPanelCollapsed((isCollapsed) => !isCollapsed)}
       />
+      <MarketDetailPanel market={activeMarket} />
     </main>
   )
 }

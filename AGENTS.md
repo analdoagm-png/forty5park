@@ -70,9 +70,16 @@ The intended product includes a building geolocalization component that lives in
 - Visual QA at `1440 x 900` matched the Figma geometry: sidepanel at `16,16` with `320 x 868`, map image at `-147,-42` with `1734 x 942`.
 - The static Figma map has been replaced by an interactive MapLibre GL map using a dark/grayscale CARTO raster basemap, constrained to a continental US viewport/bounds.
 - `src/assets/map-dark.png` remains as a local fallback behind the live map layer.
-- Market cards and map markers are wired together with mock coordinates; selecting a card highlights it and flies the map to that point.
+- `public/us-states.geojson` stores local US state boundaries for vector overlays.
+- The listed sidepanel states are highlighted on the map using Figma node `119:603` as the paint reference: `#7f56d9` fill at 50% opacity, `#7f56d9` outline at full opacity.
+- Keep grayscale styling on the raster layer paint, not as a CSS filter on the MapLibre canvas, so vector overlays and markers can keep brand color.
+- Market cards are wired to state vector bounds; selecting a card highlights it and fits the map viewport around that state's polygon.
 - The sidepanel can collapse via the sidepanel icon. Expanded state uses the full panel; collapsed state preserves only the `200 x 48` header bar and fades/slides the body out with a subtle transition.
 - Primary, secondary, and filter tabs are stateful with clean hover/press feedback and independent active states.
+- State cards use subtle hover, keyboard focus, pressed, and selected states; selected cards keep a uniform 1px purple border while fitting the map to the state vector.
+- Selecting a state card opens a right-side market detail panel based on Figma node `121:776`; its title uses the active state name instead of the source Miami MSA title.
+- The market detail "View Listings" pill uses the inline SVG exported from Figma node `121:782`.
+- When the detail panel is open, MapLibre `fitBounds` uses right-side padding so the selected state vector is centered between the left sidepanel and the right detail panel.
 
 ## Agent Guidance
 
@@ -93,3 +100,10 @@ The intended product includes a building geolocalization component that lives in
 - 2026-07-13: Added MapLibre GL interactive map background, US bounds, dark CARTO tiles, and mock market marker/card interaction.
 - 2026-07-13: Added collapsed sidepanel navigation state based on Figma node `116:584`, toggled from the sidepanel icon.
 - 2026-07-13: Added interactive hover/click/active states to the sidepanel tab groups.
+- 2026-07-13: Replaced mock property points with largest-city markers for the listed states and added highlighted state-boundary vector layers.
+- 2026-07-13: Removed the count badge from market cards and tuned state highlights toward the Figma `119:603` vector style (`#7f56d9`, 50% fill, full-opacity stroke).
+- 2026-07-13: Removed the MapLibre canvas-level grayscale CSS filter so state vectors render separately in brand color while the raster basemap remains grayscale through raster paint settings.
+- 2026-07-13: Removed city dot markers from the map and changed sidepanel selection to center/fit the viewport on the selected state vector bounds.
+- 2026-07-13: Added hover, focus, pressed, and selected feedback for state cards in the sidepanel navigation, then simplified active cards back to a uniform 1px border.
+- 2026-07-13: Added the Figma market detail panel on the right side of the dashboard and adjusted selected-state map padding to center vectors between both panels.
+- 2026-07-13: Replaced the placeholder "View Listings" icon with the exact Figma unit icon from node `121:782`.
