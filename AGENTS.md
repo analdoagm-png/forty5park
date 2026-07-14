@@ -82,8 +82,11 @@ The intended product includes a building geolocalization component that lives in
 - The Library list header search button has its own search state based on Figma node `132:601`; it swaps the list header for a 288px search field plus an empty-state panel, and does not affect the top header search icon.
 - The sidepanel list search component is shared by Markets and Library. Its empty-state icon is exported inline from Figma node `135:516`, and the search field/empty panel use subtle opacity and transform animations.
 - The `Analysis` primary tab swaps the sidepanel content to the Figma `125:764` analysis section with a start-session row, Sessions label, and four compact session cards.
+- The Markets `Trends` tab follows Figma node `140:776`, with Current/Projected controls, ranked market-cluster cards, and search/sort actions.
+- The Markets `Highlights` tab follows Figma node `140:819`, with the June 2025 summary, ranked Top Markets list, and linked market insights.
 - State cards use subtle hover, keyboard focus, pressed, and selected states; selected cards keep a uniform 1px purple border while fitting the map to the state vector.
 - Selecting a state card opens a right-side market detail panel based on Figma node `121:776`; its title uses the active state name instead of the source Miami MSA title.
+- The MapLibre attribution and built-in navigation controls are replaced by the custom Figma map controls from node `143:473`; the target button re-centers the active market and the horizontal buttons zoom out/in.
 - The market detail "View Listings" pill uses the inline SVG exported from Figma node `121:782`.
 - When the detail panel is open, MapLibre `fitBounds` uses right-side padding so the selected state vector is centered between the left sidepanel and the right detail panel.
 - Inter is loaded through `@fontsource/inter` Latin weights 400, 500, and 700 instead of relying on the font being installed on the user's machine.
@@ -122,3 +125,5 @@ The intended product includes a building geolocalization component that lives in
 - 2026-07-14: Replaced the Library search empty-state symbol with the exported Figma node `135:516` SVG and added subtle search-state transitions.
 - 2026-07-14: Reused the same sidepanel search component for the Markets tab search button.
 - 2026-07-14: Added deterministic Inter loading with `@fontsource/inter` and raised visible 10px UI text to tokenized 12px caption/body styles for WCAG readability resilience.
+- 2026-07-14: Added Figma-derived Trends and Highlights content states to the Markets secondary navigation.
+- 2026-07-14: Replaced the visible MapLibre control/attribution UI with Figma-derived custom map controls.

@@ -8,9 +8,13 @@ import './App.css'
 const primaryTabs = ['Markets', 'Library', 'Analysis']
 const segmentTabs = ['MSA', 'Trends', 'Highlights']
 const filters = ['All', 'Active', 'Restricted']
-const detailTabs = ['Portfolios (3)', 'Buy Boxes', 'Developments (5)']
-const portfolioItems = ['Core Income', 'Growth Watchlist', 'Value Add Pipeline']
+const trendPeriods = ['Current', 'Projected']
 const libraryTabs = ['Portfolios', 'Buy Boxes', 'Developments']
+const detailTabs = [
+  { id: 'Portfolios', label: 'Portfolios' },
+  { id: 'Buy Boxes', label: 'Buy Boxes' },
+  { id: 'Developments', label: 'Developments' },
+]
 const libraryPortfolioItems = [
   'Portfolio name. csv',
   'Portfolio name. csv',
@@ -46,6 +50,25 @@ const analysisSessions = [
   '[session-summary-title]',
   '[session-summary-title]',
   '[session-summary-title]',
+]
+const trendClusters = [
+  { rank: 1, color: '#edd9a3' },
+  { rank: 2, color: '#ff977f' },
+  { rank: 3, color: '#ff5493' },
+  { rank: 4, color: '#ff4ff9' },
+  { rank: 5, color: '#8346ff' },
+]
+const highlightsMarkets = [
+  'Erie County, NY: Rust Belt boom fuels entry-level demand',
+  'Collin County, TX: Tech-campus-driven growth ushers in sustainable development',
+  'Palm Beach County, FL: Luxury-led respite amid statewide slowdown',
+  'Lane County, OR: University town’s post-pandemic growth',
+  'Dallas County, IA: Heartland spillover sustains Midwestern momentum',
+]
+const highlightStories = [
+  'Renter occupancy on the rise, led by sunbelt states',
+  '30-year mortgage rates on downward trajectory, but remain high',
+  'Multifamily is back: CBRE reports best absorption since 2000',
 ]
 
 const markets = [
@@ -221,6 +244,54 @@ function PinIcon() {
   )
 }
 
+function PinFilledIcon() {
+  return (
+    <svg viewBox="0 0 12 12" aria-hidden="true">
+      <path d="M6 1.25a3.63 3.63 0 0 1 3.63 3.63c0 .78-.25 1.54-.73 2.17L6 10.48 3.22 7.2l-.11-.15a3.6 3.6 0 0 1-.74-2.17A3.63 3.63 0 0 1 6 1.25Zm0 2.38a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5Z" />
+    </svg>
+  )
+}
+
+function ShareIcon() {
+  return (
+    <svg viewBox="0 0 12 12" aria-hidden="true">
+      <path d="M7.13 1.5 10 4.38 7.13 7.25l-.71-.71L8.08 4.88H2v-1h6.08L6.42 2.21l.71-.71ZM2 6.63h1v2.12h6V5.88h1v3.37a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5V6.63Z" />
+    </svg>
+  )
+}
+
+function ArrowRightIcon() {
+  return (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <path d="m7.5 3-.71.71L10.08 7H3v1h7.08l-3.29 3.29.71.71 4.5-4.5L7.5 3Z" />
+    </svg>
+  )
+}
+
+function MapTargetIcon() {
+  return (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <path d="M7.5 1h1v2.04A5.03 5.03 0 0 1 12.96 7.5H15v1h-2.04A5.03 5.03 0 0 1 8.5 12.96V15h-1v-2.04A5.03 5.03 0 0 1 3.04 8.5H1v-1h2.04A5.03 5.03 0 0 1 7.5 3.04V1Zm.5 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm0 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4Z" />
+    </svg>
+  )
+}
+
+function ZoomOutIcon() {
+  return (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <path d="M3 7.5h10v1H3z" />
+    </svg>
+  )
+}
+
+function ZoomInIcon() {
+  return (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <path d="M7.5 3h1v4.5H13v1H8.5V13h-1V8.5H3v-1h4.5V3Z" />
+    </svg>
+  )
+}
+
 function IconButton({ children, label, size = 'medium', onClick }) {
   return (
     <button className={`icon-button icon-button-${size}`} type="button" aria-label={label} onClick={onClick}>
@@ -265,26 +336,6 @@ function UnitIcon() {
   )
 }
 
-function CalendarIcon() {
-  return (
-    <svg viewBox="0 0 12 12" aria-hidden="true">
-      <path
-        d="M3.25 1.5v1m5.5-1v1m-6.5 1.25h7.5m-7.5-1.25h7.5c.41 0 .75.34.75.75v6c0 .41-.34.75-.75.75h-7.5a.75.75 0 0 1-.75-.75v-6c0-.41.34-.75.75-.75Z"
-        fill="none"
-        stroke="currentColor"
-      />
-    </svg>
-  )
-}
-
-function ChevronRightIcon() {
-  return (
-    <svg viewBox="0 0 16 16" aria-hidden="true">
-      <path d="m6 3 5 5-5 5-.82-.82L9.36 8 5.18 3.82 6 3Z" />
-    </svg>
-  )
-}
-
 function InteractiveMap({ activeMarket, isPanelCollapsed, isDetailOpen }) {
   const mapContainerRef = useRef(null)
   const mapRef = useRef(null)
@@ -314,15 +365,6 @@ function InteractiveMap({ activeMarket, isPanelCollapsed, isDetailOpen }) {
       pitchWithRotate: false,
       style: darkRasterStyle,
     })
-
-    map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'bottom-right')
-    map.addControl(
-      new maplibregl.AttributionControl({
-        compact: true,
-        customAttribution: 'Forty5Park',
-      }),
-      'bottom-right',
-    )
 
     map.on('load', async () => {
       const statesResponse = await fetch('/us-states.geojson')
@@ -424,10 +466,70 @@ function InteractiveMap({ activeMarket, isPanelCollapsed, isDetailOpen }) {
     }
   }, [activeMarket, isDetailOpen, isPanelCollapsed, stateBoundsReady])
 
+  const centerMapOnActiveMarket = () => {
+    const map = mapRef.current
+
+    if (!map || !activeMarket) {
+      return
+    }
+
+    const stateBounds = stateBoundsRef.current.get(activeMarket.name)
+
+    if (stateBounds) {
+      map.fitBounds(stateBounds, {
+        duration: 700,
+        maxZoom: 6.25,
+        padding: {
+          top: 96,
+          right: isDetailOpen ? 384 : 96,
+          bottom: 96,
+          left: isPanelCollapsed ? 240 : 384,
+        },
+      })
+      return
+    }
+
+    map.flyTo({ center: activeMarket.coordinates, duration: 500, zoom: 5 })
+  }
+
+  const zoomMap = (direction) => {
+    const map = mapRef.current
+
+    if (!map) {
+      return
+    }
+
+    if (direction === 'in') {
+      map.zoomIn({ duration: 220 })
+      return
+    }
+
+    map.zoomOut({ duration: 220 })
+  }
+
   return (
-    <div className="interactive-map" aria-label="Interactive US market map">
+    <div className={`interactive-map ${isDetailOpen ? 'has-detail-panel' : ''}`} aria-label="Interactive US market map">
       <img className="map-fallback" src={mapImage} alt="" aria-hidden="true" />
       <div className="map-canvas" ref={mapContainerRef} />
+      <div className={`map-controls ${isDetailOpen ? 'has-detail-panel' : ''}`} aria-label="Map controls">
+        <button
+          className="map-control-button map-center-button"
+          type="button"
+          aria-label="Center map on active market"
+          disabled={!activeMarket}
+          onClick={centerMapOnActiveMarket}
+        >
+          <MapTargetIcon />
+        </button>
+        <div className="map-zoom-controls">
+          <button className="map-control-button" type="button" aria-label="Zoom out" onClick={() => zoomMap('out')}>
+            <ZoomOutIcon />
+          </button>
+          <button className="map-control-button" type="button" aria-label="Zoom in" onClick={() => zoomMap('in')}>
+            <ZoomInIcon />
+          </button>
+        </div>
+      </div>
     </div>
   )
 }
@@ -632,6 +734,95 @@ function AnalysisPanelContent() {
   )
 }
 
+function TrendClusterCard({ cluster, period }) {
+  const marketCount = period === 'Projected' ? '28 Markets' : '23 Markets'
+
+  return (
+    <article className="trend-cluster-card">
+      <div className="trend-cluster-content">
+        <div className="trend-ranking-badge" style={{ color: cluster.color }}>
+          <span className="trend-ranking-dot" style={{ backgroundColor: cluster.color }} />
+          <span>#{cluster.rank}</span>
+        </div>
+        <h2>High-Growth Builders</h2>
+        <p className="trend-description-label">Description</p>
+        <p className="trend-description">
+          Strong population growth + heavy housing starts. Healthy cap rates across multifamily/single-family.
+        </p>
+      </div>
+      <div className="trend-cluster-actions">
+        <button className="trend-market-count" type="button">{marketCount}</button>
+      </div>
+    </article>
+  )
+}
+
+function TrendsPanelContent() {
+  const [activePeriod, setActivePeriod] = useState(trendPeriods[0])
+
+  return (
+    <section className="market-list trends-list" aria-label="Market trends">
+      <div className="filter-toolbar">
+        <TabList items={trendPeriods} activeItem={activePeriod} onChange={setActivePeriod} variant="filters" />
+        <div className="filter-actions">
+          <IconButton label="Search trends" size="small">
+            <SearchIcon />
+          </IconButton>
+          <IconButton label="Sort trends" size="small">
+            <SortIcon />
+          </IconButton>
+        </div>
+      </div>
+
+      <div className="trend-cards">
+        {trendClusters.map((cluster) => (
+          <TrendClusterCard key={cluster.rank} cluster={cluster} period={activePeriod} />
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function HighlightsPanelContent() {
+  return (
+    <section className="market-list highlights-list" aria-label="Market highlights">
+      <h2 className="highlights-title">June 2025 F5P Data Highlights</h2>
+      <p className="highlights-summary">
+        Sun Belt states led the recent surge in renter occupancy as home-price pressures and demographic shifts
+        pushed more households into rentals.
+      </p>
+      <button className="highlights-share" type="button">
+        <ShareIcon />
+        <span>Share</span>
+      </button>
+
+      <h3 className="highlights-section-title">Top Markets</h3>
+      <div className="highlights-market-list">
+        {highlightsMarkets.map((market, index) => (
+          <article className="highlight-market-card" key={market}>
+            <span className="highlight-rank">#{index + 1}</span>
+            <p>{market}</p>
+            <span className="highlight-location">
+              <PinFilledIcon />
+              <span>11.0079941 / -74.8361482</span>
+            </span>
+          </article>
+        ))}
+      </div>
+
+      <h3 className="highlights-section-title highlights-what-title">What’s in it</h3>
+      <div className="highlights-story-list">
+        {highlightStories.map((story) => (
+          <button className="highlight-story" key={story} type="button">
+            <ArrowRightIcon />
+            <span>{story}</span>
+          </button>
+        ))}
+      </div>
+    </section>
+  )
+}
+
 function MarketsPanelContent({ activeMarket, activeSegmentTab, activeFilter, onFilterChange, onSegmentChange, onSelectMarket }) {
   const [isMarketSearchOpen, setIsMarketSearchOpen] = useState(false)
   const [marketSearchQuery, setMarketSearchQuery] = useState('')
@@ -655,7 +846,9 @@ function MarketsPanelContent({ activeMarket, activeSegmentTab, activeFilter, onF
         variant="segments"
       />
 
-      <section className="market-list" aria-label="Market list">
+      {activeSegmentTab === 'Trends' ? <TrendsPanelContent /> : null}
+      {activeSegmentTab === 'Highlights' ? <HighlightsPanelContent /> : null}
+      {activeSegmentTab === 'MSA' ? <section className="market-list" aria-label="Market list">
         {isMarketSearchOpen ? (
           <>
             <PanelSearchField
@@ -692,7 +885,7 @@ function MarketsPanelContent({ activeMarket, activeSegmentTab, activeFilter, onF
             </div>
           </>
         )}
-      </section>
+      </section> : null}
     </>
   )
 }
@@ -702,14 +895,14 @@ function DetailTabList({ activeTab, onChange }) {
     <div className="detail-tabs" role="tablist" aria-label="Market detail categories">
       {detailTabs.map((tab) => (
         <button
-          className={`detail-tab ${tab === activeTab ? 'is-active' : ''}`}
-          key={tab}
-          onClick={() => onChange(tab)}
+          className={`detail-tab ${tab.id === activeTab ? 'is-active' : ''}`}
+          key={tab.id}
+          onClick={() => onChange(tab.id)}
           type="button"
           role="tab"
-          aria-selected={tab === activeTab}
+          aria-selected={tab.id === activeTab}
         >
-          {tab}
+          {tab.label}
         </button>
       ))}
     </div>
@@ -717,7 +910,8 @@ function DetailTabList({ activeTab, onChange }) {
 }
 
 function MarketDetailPanel({ market }) {
-  const [activeTab, setActiveTab] = useState(detailTabs[0])
+  const [activeTab, setActiveTab] = useState(detailTabs[0].id)
+  const activeItemContent = libraryContent[activeTab]
 
   if (!market) {
     return null
@@ -757,18 +951,9 @@ function MarketDetailPanel({ market }) {
           <h2 id="items-heading">Your Items</h2>
           <DetailTabList activeTab={activeTab} onChange={setActiveTab} />
 
-          <div className="portfolio-list">
-            {portfolioItems.map((item) => (
-              <button className="portfolio-item" key={item} type="button">
-                <span className="portfolio-info">
-                  <strong>{item}</strong>
-                  <span>
-                    <CalendarIcon />
-                    Last Updated: Aug 12, 2025
-                  </span>
-                </span>
-                <ChevronRightIcon />
-              </button>
+          <div className="library-cards" aria-label={`Your ${activeTab}`}>
+            {activeItemContent.items.map((item, index) => (
+              <LibraryItemCard key={`${activeTab}-${item.name}-${index}`} item={item} />
             ))}
           </div>
         </section>
