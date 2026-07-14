@@ -75,7 +75,12 @@ The intended product includes a building geolocalization component that lives in
 - Keep grayscale styling on the raster layer paint, not as a CSS filter on the MapLibre canvas, so vector overlays and markers can keep brand color.
 - Market cards are wired to state vector bounds; selecting a card highlights it and fits the map viewport around that state's polygon.
 - The sidepanel can collapse via the sidepanel icon. Expanded state uses the full panel; collapsed state preserves only the `200 x 48` header bar and fades/slides the body out with a subtle transition.
+- Expanded sidepanel height should track the viewport with bottom separation preserved (`16px` desktop, `12px` mobile), rather than staying capped to the original `868px` Figma frame height.
 - Primary, secondary, and filter tabs are stateful with clean hover/press feedback and independent active states.
+- The `Library` primary tab swaps the sidepanel content to the Figma library sections: `125:813` Portfolios, `125:921` Buy Boxes, and `125:984` Developments. The secondary library tabs update list labels, card counts, card titles, and stat rows.
+- The Library list header search button has its own search state based on Figma node `132:601`; it swaps the list header for a 288px search field plus an empty-state panel, and does not affect the top header search icon.
+- The sidepanel list search component is shared by Markets and Library. Its empty-state icon is exported inline from Figma node `135:516`, and the search field/empty panel use subtle opacity and transform animations.
+- The `Analysis` primary tab swaps the sidepanel content to the Figma `125:764` analysis section with a start-session row, Sessions label, and four compact session cards.
 - State cards use subtle hover, keyboard focus, pressed, and selected states; selected cards keep a uniform 1px purple border while fitting the map to the state vector.
 - Selecting a state card opens a right-side market detail panel based on Figma node `121:776`; its title uses the active state name instead of the source Miami MSA title.
 - The market detail "View Listings" pill uses the inline SVG exported from Figma node `121:782`.
@@ -107,3 +112,9 @@ The intended product includes a building geolocalization component that lives in
 - 2026-07-13: Added hover, focus, pressed, and selected feedback for state cards in the sidepanel navigation, then simplified active cards back to a uniform 1px border.
 - 2026-07-13: Added the Figma market detail panel on the right side of the dashboard and adjusted selected-state map padding to center vectors between both panels.
 - 2026-07-13: Replaced the placeholder "View Listings" icon with the exact Figma unit icon from node `121:782`.
+- 2026-07-13: Added the Library sidepanel sections from Figma nodes `125:813`, `125:921`, and `125:984`, and introduced the `--neutral-500` token for card dividers.
+- 2026-07-13: Added the Analysis sidepanel section from Figma node `125:764`, including the exact edit icon from node `128:656`.
+- 2026-07-13: Added the Library list search state from Figma node `132:601`, scoped to the in-list search action only.
+- 2026-07-14: Changed the expanded sidepanel to match viewport height while preserving the bottom gap.
+- 2026-07-14: Replaced the Library search empty-state symbol with the exported Figma node `135:516` SVG and added subtle search-state transitions.
+- 2026-07-14: Reused the same sidepanel search component for the Markets tab search button.
