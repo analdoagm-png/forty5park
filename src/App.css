@@ -71,7 +71,7 @@
   border-radius: 4px;
   background: rgb(29 29 29 / 76%);
   color: var(--neutral-200);
-  font-size: 10px;
+  font-size: var(--font-size-caption);
 }
 
 .map-canvas .maplibregl-ctrl-attrib a {
@@ -246,9 +246,9 @@
   border-radius: 50%;
   background: var(--neutral-600);
   color: var(--neutral-0);
-  font-size: 12px;
+  font-size: var(--font-size-body);
   font-weight: 500;
-  line-height: 1.7;
+  line-height: var(--line-height-readable);
 }
 
 .tab-list {
@@ -298,8 +298,8 @@
   border-bottom: 2px solid transparent;
   border-radius: 0;
   color: var(--neutral-300);
-  font-size: 14px;
-  line-height: 1.7;
+  font-size: var(--font-size-tab);
+  line-height: var(--line-height-readable);
 }
 
 .tab-list-primary .tab-button:hover {
@@ -327,8 +327,8 @@
   height: 24px;
   padding: 0 8px;
   color: var(--neutral-200);
-  font-size: 12px;
-  line-height: 1.4;
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-compact);
 }
 
 .tab-list-segments .tab-button:hover,
@@ -344,15 +344,15 @@
   height: 24px;
   padding: 0 8px;
   color: var(--neutral-200);
-  font-size: 12px;
-  line-height: 1.4;
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-compact);
 }
 
 .tab-list-segments .tab-button.is-active,
 .tab-list-filters .tab-button.is-active {
   background: var(--neutral-600);
   color: var(--neutral-0);
-  line-height: 1.7;
+  line-height: var(--line-height-readable);
   box-shadow:
     0 1px 2px rgb(16 24 40 / 6%),
     0 1px 3px rgb(16 24 40 / 10%);
@@ -409,8 +409,8 @@
   background: transparent;
   color: var(--neutral-200);
   font: inherit;
-  font-size: 12px;
-  line-height: 1.4;
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-compact);
   cursor: pointer;
   white-space: nowrap;
   transition:
@@ -431,7 +431,7 @@
 .library-tab.is-active {
   background: var(--neutral-600);
   color: var(--neutral-0);
-  line-height: 1.7;
+  line-height: var(--line-height-readable);
   box-shadow:
     0 1px 2px rgb(16 24 40 / 6%),
     0 1px 3px rgb(16 24 40 / 10%);
@@ -457,9 +457,9 @@
 .library-list-header p {
   margin: 0;
   color: var(--neutral-200);
-  font-size: 12px;
+  font-size: var(--font-size-body);
   font-weight: 400;
-  line-height: 1.4;
+  line-height: var(--line-height-compact);
   white-space: nowrap;
 }
 
@@ -504,9 +504,9 @@
   background: transparent;
   color: var(--neutral-0);
   font: inherit;
-  font-size: 10px;
+  font-size: var(--font-size-body);
   font-weight: 400;
-  line-height: 1.7;
+  line-height: var(--line-height-readable);
   transition: color 150ms ease-out;
 }
 
@@ -611,9 +611,9 @@
   margin: 0;
   overflow: hidden;
   color: var(--neutral-0);
-  font-size: 12px;
+  font-size: var(--font-size-body);
   font-weight: 700;
-  line-height: 1.7;
+  line-height: var(--line-height-readable);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -652,9 +652,9 @@
   align-items: center;
   padding: 4px 16px;
   color: var(--neutral-300);
-  font-size: 12px;
+  font-size: var(--font-size-body);
   font-weight: 400;
-  line-height: 1.4;
+  line-height: var(--line-height-compact);
   white-space: nowrap;
 }
 
@@ -686,9 +686,9 @@
   margin: 0;
   padding: 0 16px 12px;
   color: var(--neutral-300);
-  font-size: 10px;
+  font-size: var(--font-size-caption);
   font-weight: 400;
-  line-height: 1.7;
+  line-height: var(--line-height-readable);
   white-space: nowrap;
 }
 
@@ -740,9 +740,9 @@
   margin: 0;
   overflow: hidden;
   color: var(--neutral-0);
-  font-size: 12px;
+  font-size: var(--font-size-body);
   font-weight: 700;
-  line-height: 1.7;
+  line-height: var(--line-height-readable);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -757,9 +757,9 @@
 .analysis-list > h2 {
   margin: 12px 0;
   color: var(--neutral-0);
-  font-size: 12px;
+  font-size: var(--font-size-body);
   font-weight: 400;
-  line-height: 1.7;
+  line-height: var(--line-height-readable);
 }
 
 .analysis-sessions {
@@ -798,7 +798,7 @@
 .market-card {
   position: relative;
   width: 288px;
-  min-height: 61px;
+  min-height: 64px;
   display: grid;
   align-content: center;
   gap: 0;
@@ -852,9 +852,9 @@
 .market-card h2 {
   margin: 0;
   color: var(--neutral-0);
-  font-size: 12px;
+  font-size: var(--font-size-body);
   font-weight: 700;
-  line-height: 1.7;
+  line-height: var(--line-height-readable);
 }
 
 .market-address {
@@ -886,9 +886,9 @@
   margin: 0;
   overflow: hidden;
   color: var(--neutral-0);
-  font-size: 10px;
+  font-size: var(--font-size-caption);
   font-weight: 400;
-  line-height: 1.7;
+  line-height: var(--line-height-readable);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -896,15 +896,15 @@
 .market-tag {
   flex: 0 0 auto;
   display: inline-flex;
-  min-width: 15px;
-  height: 17px;
+  min-width: 18px;
+  height: 20px;
   align-items: center;
   justify-content: center;
   border-radius: 4px;
   background: var(--brand-main);
   color: var(--neutral-0);
-  font-size: 10px;
-  line-height: 1.7;
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-readable);
 }
 
 .market-card-hit-area {
@@ -956,13 +956,13 @@
   width: 288px;
   margin: 0;
   color: var(--neutral-0);
-  font-size: 16px;
+  font-size: var(--font-size-title);
   font-weight: 700;
-  line-height: 1.7;
+  line-height: var(--line-height-readable);
 }
 
 .detail-pill-button {
-  min-height: 24px;
+  min-height: 28px;
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -972,8 +972,8 @@
   background: var(--neutral-600);
   color: var(--neutral-0);
   font: inherit;
-  font-size: 10px;
-  line-height: 1.7;
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-readable);
   cursor: pointer;
   transition:
     background-color 150ms ease-out,
@@ -1021,9 +1021,9 @@
 .detail-section h2 {
   margin: 0;
   color: var(--neutral-300);
-  font-size: 10px;
+  font-size: var(--font-size-caption);
   font-weight: 400;
-  line-height: 1.7;
+  line-height: var(--line-height-readable);
 }
 
 .outlook-card {
@@ -1040,7 +1040,7 @@
 }
 
 .ranking-badge {
-  height: 17px;
+  height: 20px;
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -1050,8 +1050,8 @@
   border-radius: 4px;
   background: var(--neutral-1100);
   color: #edd9a3;
-  font-size: 10px;
-  line-height: 1.7;
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-readable);
 }
 
 .ranking-dot {
@@ -1064,17 +1064,17 @@
 .outlook-card h3 {
   margin: 0;
   color: var(--neutral-0);
-  font-size: 14px;
+  font-size: var(--font-size-tab);
   font-weight: 700;
-  line-height: 1.7;
+  line-height: var(--line-height-readable);
 }
 
 .detail-label,
 .outlook-description {
   margin: 0;
-  font-size: 10px;
+  font-size: var(--font-size-caption);
   font-weight: 400;
-  line-height: 1.7;
+  line-height: var(--line-height-readable);
 }
 
 .detail-label {
@@ -1105,8 +1105,8 @@
   background: transparent;
   color: var(--neutral-200);
   font: inherit;
-  font-size: 12px;
-  line-height: 1.4;
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-compact);
   cursor: pointer;
   white-space: nowrap;
   transition:
@@ -1128,7 +1128,7 @@
 .detail-tab.is-active {
   background: var(--neutral-600);
   color: var(--neutral-0);
-  line-height: 1.7;
+  line-height: var(--line-height-readable);
   box-shadow:
     0 1px 2px rgb(16 24 40 / 6%),
     0 1px 3px rgb(16 24 40 / 10%);
@@ -1178,9 +1178,9 @@
 .portfolio-info strong {
   overflow: hidden;
   color: var(--neutral-0);
-  font-size: 14px;
+  font-size: var(--font-size-tab);
   font-weight: 700;
-  line-height: 1.7;
+  line-height: var(--line-height-readable);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -1190,8 +1190,8 @@
   align-items: center;
   gap: 4px;
   color: var(--neutral-0);
-  font-size: 10px;
-  line-height: 1.7;
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-readable);
   white-space: nowrap;
 }
 

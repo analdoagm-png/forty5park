@@ -35,6 +35,7 @@ The intended product includes a building geolocalization component that lives in
 - React 19
 - Vite 8
 - MapLibre GL for the interactive map background
+- `@fontsource/inter` for deterministic local Inter font loading
 - Oxlint
 - Plain CSS modules by file import, using `src/App.css` and `src/index.css`
 
@@ -85,6 +86,8 @@ The intended product includes a building geolocalization component that lives in
 - Selecting a state card opens a right-side market detail panel based on Figma node `121:776`; its title uses the active state name instead of the source Miami MSA title.
 - The market detail "View Listings" pill uses the inline SVG exported from Figma node `121:782`.
 - When the detail panel is open, MapLibre `fitBounds` uses right-side padding so the selected state vector is centered between the left sidepanel and the right detail panel.
+- Inter is loaded through `@fontsource/inter` Latin weights 400, 500, and 700 instead of relying on the font being installed on the user's machine.
+- Visible UI text uses typography tokens from `src/index.css`, with `12px` as the readable floor for captions/body text while preserving the compact dashboard density.
 
 ## Agent Guidance
 
@@ -118,3 +121,4 @@ The intended product includes a building geolocalization component that lives in
 - 2026-07-14: Changed the expanded sidepanel to match viewport height while preserving the bottom gap.
 - 2026-07-14: Replaced the Library search empty-state symbol with the exported Figma node `135:516` SVG and added subtle search-state transitions.
 - 2026-07-14: Reused the same sidepanel search component for the Markets tab search button.
+- 2026-07-14: Added deterministic Inter loading with `@fontsource/inter` and raised visible 10px UI text to tokenized 12px caption/body styles for WCAG readability resilience.
