@@ -36,6 +36,7 @@ The intended product includes a building geolocalization component that lives in
 - Vite 8
 - MapLibre GL for the interactive map background
 - `@fontsource/inter` for deterministic local Inter font loading
+- Storybook 10 with the React/Vite framework, accessibility, docs, and Vitest browser-test addons
 - Oxlint
 - Plain CSS modules by file import, using `src/App.css` and `src/index.css`
 
@@ -45,6 +46,9 @@ The intended product includes a building geolocalization component that lives in
 - `npm run build` creates a production build in `dist/`.
 - `npm run lint` runs Oxlint.
 - `npm run preview` serves the production build locally.
+- `npm run storybook` starts the component workbench on port 6006.
+- `npm run build-storybook` builds the static component workbench.
+- `npx vitest --project storybook run` runs the browser-based Storybook checks.
 
 ## Project Structure
 
@@ -52,6 +56,7 @@ The intended product includes a building geolocalization component that lives in
 - `src/App.jsx` contains the dashboard and sidepanel component structure.
 - `src/App.css` contains component-level styles for the dashboard and sidepanel.
 - `src/index.css` contains global CSS variables and base document styles.
+- `src/*.stories.jsx` contains isolated Storybook stories for the selected controls, cards, and panel states.
 - `src/assets/map-dark.png` is the local Figma map image asset used as the dashboard background.
 - `src/assets/brand-icon.svg` is the local Figma brand icon asset used in the sidepanel header.
 - `public/` contains static assets from the Vite scaffold.
@@ -87,6 +92,7 @@ The intended product includes a building geolocalization component that lives in
 - State cards use subtle hover, keyboard focus, pressed, and selected states; selected cards keep a uniform 1px purple border while fitting the map to the state vector.
 - Selecting a state card opens a right-side market detail panel based on Figma node `121:776`; its title uses the active state name instead of the source Miami MSA title.
 - The MapLibre attribution and built-in navigation controls are replaced by the custom Figma map controls from node `143:473`; the target button re-centers the active market and the horizontal buttons zoom out/in.
+- Storybook stories cover the reusable controls, market/library/analysis/trend cards, and Market Detail/Highlights panels. The interactive map remains app-only because it needs a live MapLibre instance and state-boundary data.
 - The market detail "View Listings" pill uses the inline SVG exported from Figma node `121:782`.
 - When the detail panel is open, MapLibre `fitBounds` uses right-side padding so the selected state vector is centered between the left sidepanel and the right detail panel.
 - Inter is loaded through `@fontsource/inter` Latin weights 400, 500, and 700 instead of relying on the font being installed on the user's machine.
@@ -127,3 +133,4 @@ The intended product includes a building geolocalization component that lives in
 - 2026-07-14: Added deterministic Inter loading with `@fontsource/inter` and raised visible 10px UI text to tokenized 12px caption/body styles for WCAG readability resilience.
 - 2026-07-14: Added Figma-derived Trends and Highlights content states to the Markets secondary navigation.
 - 2026-07-14: Replaced the visible MapLibre control/attribution UI with Figma-derived custom map controls.
+- 2026-07-16: Added Storybook 10 for React/Vite, component stories, static-asset support, and browser-based story verification.

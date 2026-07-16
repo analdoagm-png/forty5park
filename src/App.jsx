@@ -187,7 +187,7 @@ function SidepanelIcon() {
   )
 }
 
-function SearchIcon() {
+export function SearchIcon() {
   return (
     <svg viewBox="0 0 20 20" aria-hidden="true">
       <path
@@ -292,7 +292,7 @@ function ZoomInIcon() {
   )
 }
 
-function IconButton({ children, label, size = 'medium', onClick }) {
+export function IconButton({ children, label, size = 'medium', onClick }) {
   return (
     <button className={`icon-button icon-button-${size}`} type="button" aria-label={label} onClick={onClick}>
       {children}
@@ -300,7 +300,7 @@ function IconButton({ children, label, size = 'medium', onClick }) {
   )
 }
 
-function TabList({ items, activeItem, onChange, variant }) {
+export function TabList({ items, activeItem, onChange, variant }) {
   const handleTabClick = (event, item) => {
     onChange(item)
 
@@ -534,7 +534,7 @@ function InteractiveMap({ activeMarket, isPanelCollapsed, isDetailOpen }) {
   )
 }
 
-function MarketCard({ market, isActive, onSelect }) {
+export function MarketCard({ market, isActive, onSelect }) {
   return (
     <article className={`market-card ${isActive ? 'is-active' : ''}`}>
       <h2>{market.name}</h2>
@@ -569,7 +569,7 @@ function LibraryTabList({ activeTab, onChange }) {
   )
 }
 
-function LibraryItemCard({ item }) {
+export function LibraryItemCard({ item }) {
   return (
     <article className="library-card">
       <div className="library-card-header">
@@ -704,7 +704,7 @@ function LibraryPanelContent() {
   )
 }
 
-function AnalysisSessionCard({ title }) {
+export function AnalysisSessionCard({ title }) {
   return (
     <article className="analysis-session-card">
       <h2>{title}</h2>
@@ -734,7 +734,7 @@ function AnalysisPanelContent() {
   )
 }
 
-function TrendClusterCard({ cluster, period }) {
+export function TrendClusterCard({ cluster, period }) {
   const marketCount = period === 'Projected' ? '28 Markets' : '23 Markets'
 
   return (
@@ -783,7 +783,7 @@ function TrendsPanelContent() {
   )
 }
 
-function HighlightsPanelContent() {
+export function HighlightsPanelContent() {
   return (
     <section className="market-list highlights-list" aria-label="Market highlights">
       <h2 className="highlights-title">June 2025 F5P Data Highlights</h2>
@@ -909,7 +909,7 @@ function DetailTabList({ activeTab, onChange }) {
   )
 }
 
-function MarketDetailPanel({ market }) {
+export function MarketDetailPanel({ market }) {
   const [activeTab, setActiveTab] = useState(detailTabs[0].id)
   const activeItemContent = libraryContent[activeTab]
 
