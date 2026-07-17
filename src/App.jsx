@@ -16,19 +16,69 @@ const detailTabs = [
   { id: 'Developments', label: 'Developments' },
 ]
 const libraryPortfolioItems = [
-  'Portfolio name. csv',
-  'Portfolio name. csv',
-  'Portfolio name. csv',
-  'Portfolio name. csv',
-  'Portfolio name. csv',
+  {
+    id: 'sunbelt-growth',
+    name: 'Sunbelt Growth Collection',
+    stats: ['5 Markets', '1,234 Units', '$7.8MM Rent/mo'],
+    kpis: { properties: 835, units: 1234, singleFamily: 234 },
+    markets: [
+      { name: 'Miami-Fort Lauderdale-West Palm Beach, FL', states: ['Florida'], properties: 300, singleFamily: 110, tags: ['SFR 48%', 'BTR 32%', 'MFR 20%'] },
+      { name: 'Dallas-Fort Worth-Arlington, TX', states: ['Texas'], properties: 215, singleFamily: 74, tags: ['SFR 62%', 'BTR 28%', 'MFR 10%'] },
+      { name: 'Atlanta-Sandy Springs-Roswell, GA', states: ['Georgia'], properties: 152, singleFamily: 38, tags: ['SFR 55%', 'BTR 30%', 'MFR 15%'] },
+      { name: 'Tampa-St. Petersburg-Clearwater, FL', states: ['Florida'], properties: 168, singleFamily: 12, tags: ['SFR 44%', 'BTR 36%', 'MFR 20%'] },
+    ],
+  },
+  {
+    id: 'midwest-essentials',
+    name: 'Midwest Essentials',
+    stats: ['4 Markets', '642 Units', '$3.9MM Rent/mo'],
+    kpis: { properties: 426, units: 642, singleFamily: 181 },
+    markets: [
+      { name: 'Chicago-Naperville-Elgin, IL-IN-WI', states: ['Illinois', 'Indiana', 'Wisconsin'], properties: 178, singleFamily: 62, tags: ['SFR 35%', 'BTR 15%', 'MFR 50%'] },
+      { name: 'Detroit-Warren-Dearborn, MI', states: ['Michigan'], properties: 96, singleFamily: 54, tags: ['SFR 68%', 'BTR 22%', 'MFR 10%'] },
+      { name: 'Columbus, OH', states: ['Ohio'], properties: 84, singleFamily: 31, tags: ['SFR 52%', 'BTR 25%', 'MFR 23%'] },
+      { name: 'Indianapolis-Carmel-Anderson, IN', states: ['Indiana'], properties: 68, singleFamily: 34, tags: ['SFR 70%', 'BTR 18%', 'MFR 12%'] },
+    ],
+  },
+  {
+    id: 'coastal-multifamily',
+    name: 'Coastal Multifamily Fund',
+    stats: ['3 Markets', '410 Units', '$4.6MM Rent/mo'],
+    kpis: { properties: 147, units: 410, singleFamily: 28 },
+    markets: [
+      { name: 'Los Angeles-Long Beach-Anaheim, CA', states: ['California'], properties: 55, singleFamily: 8, tags: ['SFR 12%', 'BTR 18%', 'MFR 70%'] },
+      { name: 'San Diego-Chula Vista-Carlsbad, CA', states: ['California'], properties: 42, singleFamily: 10, tags: ['SFR 20%', 'BTR 15%', 'MFR 65%'] },
+      { name: 'Seattle-Tacoma-Bellevue, WA', states: ['Washington'], properties: 50, singleFamily: 10, tags: ['SFR 18%', 'BTR 22%', 'MFR 60%'] },
+    ],
+  },
+  {
+    id: 'texas-build-to-rent',
+    name: 'Texas Build-to-Rent',
+    stats: ['4 Markets', '526 Units', '$3.2MM Rent/mo'],
+    kpis: { properties: 301, units: 526, singleFamily: 237 },
+    markets: [
+      { name: 'Austin-Round Rock-Georgetown, TX', states: ['Texas'], properties: 94, singleFamily: 88, tags: ['SFR 45%', 'BTR 48%', 'MFR 7%'] },
+      { name: 'Houston-The Woodlands-Sugar Land, TX', states: ['Texas'], properties: 83, singleFamily: 61, tags: ['SFR 52%', 'BTR 40%', 'MFR 8%'] },
+      { name: 'San Antonio-New Braunfels, TX', states: ['Texas'], properties: 66, singleFamily: 49, tags: ['SFR 48%', 'BTR 42%', 'MFR 10%'] },
+      { name: 'Dallas-Fort Worth-Arlington, TX', states: ['Texas'], properties: 58, singleFamily: 39, tags: ['SFR 50%', 'BTR 38%', 'MFR 12%'] },
+    ],
+  },
+  {
+    id: 'northeast-value-add',
+    name: 'Northeast Value-Add',
+    stats: ['3 Markets', '288 Units', '$2.1MM Rent/mo'],
+    kpis: { properties: 193, units: 288, singleFamily: 91 },
+    markets: [
+      { name: 'New York-Newark-Jersey City, NY-NJ-PA', states: ['New York', 'New Jersey', 'Pennsylvania'], properties: 75, singleFamily: 22, tags: ['SFR 20%', 'BTR 12%', 'MFR 68%'] },
+      { name: 'Philadelphia-Camden-Wilmington, PA-NJ-DE-MD', states: ['Pennsylvania', 'New Jersey', 'Delaware', 'Maryland'], properties: 64, singleFamily: 33, tags: ['SFR 46%', 'BTR 20%', 'MFR 34%'] },
+      { name: 'Boston-Cambridge-Newton, MA-NH', states: ['Massachusetts', 'New Hampshire'], properties: 54, singleFamily: 36, tags: ['SFR 40%', 'BTR 16%', 'MFR 44%'] },
+    ],
+  },
 ]
 const libraryContent = {
   Portfolios: {
     countLabel: 'Showing 5 portfolios',
-    items: libraryPortfolioItems.map((name) => ({
-      name,
-      stats: ['5 Markets', '300 Units', '$50MM Rent/mo'],
-    })),
+    items: libraryPortfolioItems,
   },
   'Buy Boxes': {
     countLabel: 'Showing 3 buy boxes',
@@ -70,7 +120,6 @@ const highlightStories = [
   '30-year mortgage rates on downward trajectory, but remain high',
   'Multifamily is back: CBRE reports best absorption since 2000',
 ]
-
 const markets = [
   {
     name: 'Michigan',
@@ -122,6 +171,12 @@ const usBounds = [
   [-127.5, 23.5],
   [-65, 50.5],
 ]
+// The map can travel slightly beyond the data bounds so `fitBounds` padding can
+// keep markets visible beside the overlaid navigation and detail panels.
+const mapCameraBounds = [
+  [-140, 16],
+  [-52, 58],
+]
 
 function getGeometryBounds(geometry) {
   let bounds = null
@@ -146,6 +201,31 @@ function getGeometryBounds(geometry) {
 
   extendBounds(geometry?.coordinates)
   return bounds
+}
+
+function useCountUp(target, duration = 700) {
+  const [value, setValue] = useState(0)
+
+  useEffect(() => {
+    let frameId
+    const startTime = performance.now()
+
+    const updateValue = (now) => {
+      const progress = Math.min((now - startTime) / duration, 1)
+      const easedProgress = 1 - (1 - progress) ** 3
+      setValue(Math.round(target * easedProgress))
+
+      if (progress < 1) {
+        frameId = requestAnimationFrame(updateValue)
+      }
+    }
+
+    frameId = requestAnimationFrame(updateValue)
+
+    return () => cancelAnimationFrame(frameId)
+  }, [duration, target])
+
+  return value
 }
 
 const darkRasterStyle = {
@@ -292,6 +372,22 @@ function ZoomInIcon() {
   )
 }
 
+function AddIcon() {
+  return (
+    <svg viewBox="0 0 12 12" aria-hidden="true">
+      <path d="M5.5 1.5h1v4h4v1h-4v4h-1v-4h-4v-1h4v-4Z" />
+    </svg>
+  )
+}
+
+function HelpIcon() {
+  return (
+    <svg viewBox="0 0 14 14" aria-hidden="true">
+      <path d="M7 1.25a5.75 5.75 0 1 1 0 11.5 5.75 5.75 0 0 1 0-11.5Zm0 1a4.75 4.75 0 1 0 0 9.5 4.75 4.75 0 0 0 0-9.5Zm0 6.63a.63.63 0 1 0 0 1.25.63.63 0 0 0 0-1.25Zm0-4.63c-1.1 0-1.88.67-1.88 1.65h1c0-.4.27-.65.88-.65.5 0 .87.25.87.67 0 .38-.2.59-.7.9-.57.36-.92.75-.92 1.43v.13h1v-.09c0-.35.18-.54.63-.82.55-.35.99-.76.99-1.6 0-.98-.8-1.62-1.87-1.62Z" />
+    </svg>
+  )
+}
+
 export function IconButton({ children, label, size = 'medium', onClick }) {
   return (
     <button className={`icon-button icon-button-${size}`} type="button" aria-label={label} onClick={onClick}>
@@ -336,7 +432,7 @@ function UnitIcon() {
   )
 }
 
-function InteractiveMap({ activeMarket, isPanelCollapsed, isDetailOpen }) {
+function InteractiveMap({ activeMarket, activePortfolio, hasMarketDetail, isPanelCollapsed, isDetailOpen, isPortfolioPanelOpen }) {
   const mapContainerRef = useRef(null)
   const mapRef = useRef(null)
   const stateBoundsRef = useRef(new Map())
@@ -358,10 +454,10 @@ function InteractiveMap({ activeMarket, isPanelCollapsed, isDetailOpen }) {
       fitBoundsOptions: {
         padding: { top: 56, right: 40, bottom: 36, left: 336 },
       },
-      maxBounds: usBounds,
+      maxBounds: mapCameraBounds,
       maxPitch: 0,
       maxZoom: 11,
-      minZoom: 3,
+      minZoom: 2.25,
       pitchWithRotate: false,
       style: darkRasterStyle,
     })
@@ -432,21 +528,22 @@ function InteractiveMap({ activeMarket, isPanelCollapsed, isDetailOpen }) {
 
     mapRef.current.resize()
 
-    if (!activeMarket) {
+    if (!activeMarket || activePortfolio) {
       mapRef.current.fitBounds(usBounds, {
-        duration: 360,
+        duration: activePortfolio ? 700 : 360,
+        ...(activePortfolio ? { maxZoom: 2.75 } : {}),
         padding: {
           top: 56,
-          right: isDetailOpen ? 352 : 40,
+          right: isDetailOpen && !activePortfolio ? 352 : 40,
           bottom: 36,
           left: isPanelCollapsed ? 216 : 336,
         },
       })
     }
-  }, [activeMarket, isDetailOpen, isPanelCollapsed])
+  }, [activeMarket, activePortfolio, isDetailOpen, isPanelCollapsed])
 
   useEffect(() => {
-    if (activeMarket && mapRef.current && stateBoundsReady) {
+    if (activeMarket && !activePortfolio && mapRef.current && stateBoundsReady) {
       const stateBounds = stateBoundsRef.current.get(activeMarket.name)
 
       if (!stateBounds) {
@@ -464,12 +561,46 @@ function InteractiveMap({ activeMarket, isPanelCollapsed, isDetailOpen }) {
         },
       })
     }
-  }, [activeMarket, isDetailOpen, isPanelCollapsed, stateBoundsReady])
+  }, [activeMarket, activePortfolio, isDetailOpen, isPanelCollapsed, stateBoundsReady])
+
+  useEffect(() => {
+    const map = mapRef.current
+
+    if (!map || !stateBoundsReady) {
+      return
+    }
+
+    const stateNames = activePortfolio
+      ? [...new Set(activePortfolio.markets.flatMap((market) => market.states))]
+      : highlightedStateNames
+    const filter = ['in', ['get', 'name'], ['literal', stateNames]]
+
+    map.setFilter('highlighted-state-fill', filter)
+    map.setFilter('highlighted-state-line', filter)
+  }, [activePortfolio, stateBoundsReady])
 
   const centerMapOnActiveMarket = () => {
     const map = mapRef.current
 
-    if (!map || !activeMarket) {
+    if (!map) {
+      return
+    }
+
+    if (activePortfolio) {
+      map.fitBounds(usBounds, {
+        duration: 700,
+        maxZoom: 2.75,
+        padding: {
+          top: 56,
+          right: 40,
+          bottom: 36,
+          left: isPanelCollapsed ? 216 : 336,
+        },
+      })
+      return
+    }
+
+    if (!activeMarket) {
       return
     }
 
@@ -508,15 +639,25 @@ function InteractiveMap({ activeMarket, isPanelCollapsed, isDetailOpen }) {
   }
 
   return (
-    <div className={`interactive-map ${isDetailOpen ? 'has-detail-panel' : ''}`} aria-label="Interactive US market map">
+    <div
+      className={`interactive-map ${isDetailOpen ? 'has-detail-panel' : ''} ${
+        isPortfolioPanelOpen ? 'has-portfolio-panel' : ''
+      }`}
+      aria-label="Interactive US market map"
+    >
       <img className="map-fallback" src={mapImage} alt="" aria-hidden="true" />
       <div className="map-canvas" ref={mapContainerRef} />
-      <div className={`map-controls ${isDetailOpen ? 'has-detail-panel' : ''}`} aria-label="Map controls">
+      <div
+        className={`map-controls ${
+          isPortfolioPanelOpen ? 'has-portfolio-panel' : hasMarketDetail ? 'has-detail-panel' : ''
+        }`}
+        aria-label="Map controls"
+      >
         <button
           className="map-control-button map-center-button"
           type="button"
-          aria-label="Center map on active market"
-          disabled={!activeMarket}
+          aria-label="Center map on active selection"
+          disabled={!activeMarket && !activePortfolio}
           onClick={centerMapOnActiveMarket}
         >
           <MapTargetIcon />
@@ -569,7 +710,7 @@ function LibraryTabList({ activeTab, onChange }) {
   )
 }
 
-export function LibraryItemCard({ item }) {
+export function LibraryItemCard({ item, onSelect }) {
   return (
     <article className="library-card">
       <div className="library-card-header">
@@ -591,6 +732,11 @@ export function LibraryItemCard({ item }) {
         ))}
       </div>
       <p>Last updated: Oct 25, 2023</p>
+      {onSelect ? (
+        <button className="library-card-hit-area" type="button" onClick={() => onSelect(item)}>
+          <span>Open {item.name}</span>
+        </button>
+      ) : null}
     </article>
   )
 }
@@ -647,7 +793,7 @@ function PanelSearchEmptyState() {
   )
 }
 
-function LibraryPanelContent() {
+function LibraryPanelContent({ onSelectPortfolio }) {
   const [activeLibraryTab, setActiveLibraryTab] = useState(libraryTabs[0])
   const [isLibrarySearchOpen, setIsLibrarySearchOpen] = useState(false)
   const [librarySearchQuery, setLibrarySearchQuery] = useState('')
@@ -694,7 +840,11 @@ function LibraryPanelContent() {
 
             <div className="library-cards">
               {activeLibraryContent.items.map((item, index) => (
-                <LibraryItemCard key={`${activeLibraryTab}-${item.name}-${index}`} item={item} />
+                <LibraryItemCard
+                  key={`${activeLibraryTab}-${item.name}-${index}`}
+                  item={item}
+                  onSelect={activeLibraryTab === 'Portfolios' ? onSelectPortfolio : undefined}
+                />
               ))}
             </div>
           </>
@@ -909,7 +1059,7 @@ function DetailTabList({ activeTab, onChange }) {
   )
 }
 
-export function MarketDetailPanel({ market }) {
+export function MarketDetailPanel({ market, isClosing = false, onExit }) {
   const [activeTab, setActiveTab] = useState(detailTabs[0].id)
   const activeItemContent = libraryContent[activeTab]
 
@@ -918,7 +1068,15 @@ export function MarketDetailPanel({ market }) {
   }
 
   return (
-    <aside className="market-detail-panel" aria-label={`${market.name} market details`}>
+    <aside
+      className={`market-detail-panel ${isClosing ? 'is-closing' : ''}`}
+      aria-label={`${market.name} market details`}
+      onAnimationEnd={(event) => {
+        if (isClosing && event.target === event.currentTarget) {
+          onExit?.()
+        }
+      }}
+    >
       <header className="market-detail-header">
         <h1>{market.name}</h1>
         <button className="detail-pill-button" type="button">
@@ -962,15 +1120,142 @@ export function MarketDetailPanel({ market }) {
   )
 }
 
-function MarketsPanel({ activeMarket, isCollapsed, onSelectMarket, onToggleCollapsed }) {
+function PortfolioKpi({ label, value }) {
+  const animatedValue = useCountUp(value)
+
+  return (
+    <div className="portfolio-kpi">
+      <p>{label}</p>
+      <strong>{animatedValue.toLocaleString('en-US')}</strong>
+    </div>
+  )
+}
+
+function PortfolioMarketCard({ market }) {
+  return (
+    <article className="portfolio-market-card">
+      <h2>{market.name}</h2>
+      <div className="portfolio-market-card-bottom">
+        <div className="portfolio-market-stats">
+          <span><span>Properties</span><strong>{market.properties}</strong></span>
+          <span><span>Single Family</span><strong>{market.singleFamily}</strong></span>
+        </div>
+        <div className="portfolio-asset-tags" aria-label="Asset type distribution">
+          <span className="asset-tag asset-tag-sfr">{market.tags[0]}</span>
+          <span className="asset-tag asset-tag-btr">{market.tags[1]}</span>
+          <span className="asset-tag asset-tag-mfr">{market.tags[2]}</span>
+        </div>
+      </div>
+    </article>
+  )
+}
+
+export function PortfolioDetailPanel({ portfolio, isClosing = false, onExit, onRequestClose }) {
+  useEffect(() => {
+    if (!portfolio) {
+      return undefined
+    }
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        onRequestClose?.()
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [onRequestClose, portfolio])
+
+  if (!portfolio) {
+    return null
+  }
+
+  return (
+    <aside
+      className={`portfolio-detail-panel ${isClosing ? 'is-closing' : ''}`}
+      aria-label={`${portfolio.name} portfolio details`}
+      onAnimationEnd={(event) => {
+        if (isClosing && event.target === event.currentTarget) {
+          onExit?.()
+        }
+      }}
+    >
+      <header className="portfolio-detail-header">
+        <h1>{portfolio.name}</h1>
+      </header>
+
+      <div className="portfolio-detail-content">
+        <section className="portfolio-overview" aria-labelledby="portfolio-overview-heading">
+          <div className="portfolio-overview-heading">
+            <h2 id="portfolio-overview-heading">Overview</h2>
+            <button className="portfolio-add-properties" type="button">
+              <AddIcon />
+              <span>Add Properties</span>
+            </button>
+          </div>
+
+          <div className="portfolio-kpi-row">
+            <div className="portfolio-kpi-double">
+              <PortfolioKpi label="Properties" value={portfolio.kpis.properties} />
+              <span className="portfolio-kpi-divider" />
+              <PortfolioKpi label="Units" value={portfolio.kpis.units} />
+            </div>
+            <PortfolioKpi label="Single Family" value={portfolio.kpis.singleFamily} />
+          </div>
+        </section>
+
+        <div className="portfolio-market-toolbar">
+          <span>Showing {portfolio.markets.length} markets</span>
+          <HelpIcon />
+          <div className="portfolio-market-actions">
+            <IconButton label="Search portfolio markets" size="small">
+              <SearchIcon />
+            </IconButton>
+            <IconButton label="Sort portfolio markets" size="small">
+              <SortIcon />
+            </IconButton>
+          </div>
+        </div>
+
+        <div className="portfolio-market-list">
+          {portfolio.markets.map((market) => (
+            <PortfolioMarketCard key={market.name} market={market} />
+          ))}
+        </div>
+      </div>
+    </aside>
+  )
+}
+
+function MarketsPanel({
+  activeMarket,
+  isCollapsed,
+  isHoverExpanded,
+  onHoverExpand,
+  onHoverCollapse,
+  onPrimaryTabChange,
+  onSelectMarket,
+  onSelectPortfolio,
+  onToggleCollapsed,
+}) {
   const [activePrimaryTab, setActivePrimaryTab] = useState('Markets')
   const [activeSegmentTab, setActiveSegmentTab] = useState('MSA')
   const [activeFilter, setActiveFilter] = useState('All')
 
+  const handlePrimaryTabChange = (tab) => {
+    setActivePrimaryTab(tab)
+    onPrimaryTabChange(tab)
+  }
+
   return (
     <aside
-      className={`markets-panel ${isCollapsed ? 'is-collapsed' : ''}`}
+      className={`markets-panel ${isCollapsed ? 'is-collapsed' : ''} ${isHoverExpanded ? 'is-hover-expanded' : ''}`}
       aria-label="Markets map controls"
+      onMouseLeave={() => {
+        if (isHoverExpanded) {
+          onHoverCollapse()
+        }
+      }}
     >
       <header className="panel-header">
         <div className="panel-header-actions">
@@ -980,6 +1265,11 @@ function MarketsPanel({ activeMarket, isCollapsed, onSelectMarket, onToggleColla
             type="button"
             aria-expanded={!isCollapsed}
             aria-label={isCollapsed ? 'Expand sidepanel' : 'Collapse sidepanel'}
+            onMouseEnter={() => {
+              if (isCollapsed) {
+                onHoverExpand()
+              }
+            }}
             onClick={onToggleCollapsed}
           >
             <SidepanelIcon />
@@ -1000,11 +1290,11 @@ function MarketsPanel({ activeMarket, isCollapsed, onSelectMarket, onToggleColla
         <TabList
           items={primaryTabs}
           activeItem={activePrimaryTab}
-          onChange={setActivePrimaryTab}
+          onChange={handlePrimaryTabChange}
           variant="primary"
         />
         {activePrimaryTab === 'Library' ? (
-          <LibraryPanelContent />
+          <LibraryPanelContent onSelectPortfolio={onSelectPortfolio} />
         ) : activePrimaryTab === 'Analysis' ? (
           <AnalysisPanelContent />
         ) : (
@@ -1024,22 +1314,76 @@ function MarketsPanel({ activeMarket, isCollapsed, onSelectMarket, onToggleColla
 
 function App() {
   const [activeMarket, setActiveMarket] = useState(null)
+  const [isDetailClosing, setIsDetailClosing] = useState(false)
+  const [activePortfolio, setActivePortfolio] = useState(null)
+  const [isPortfolioClosing, setIsPortfolioClosing] = useState(false)
   const [isPanelCollapsed, setIsPanelCollapsed] = useState(false)
+  const [isPanelHoverExpanded, setIsPanelHoverExpanded] = useState(false)
+  const isNavigationCollapsed = isPanelCollapsed && !isPanelHoverExpanded
+
+  const handlePrimaryTabChange = (tab) => {
+    setIsDetailClosing(tab !== 'Markets' && Boolean(activeMarket))
+    setIsPortfolioClosing(tab !== 'Library' && Boolean(activePortfolio))
+  }
+
+  const handleSelectMarket = (market) => {
+    setActiveMarket(market)
+    setIsDetailClosing(false)
+  }
+
+  const handleDetailExit = () => {
+    setActiveMarket(null)
+    setIsDetailClosing(false)
+  }
+
+  const handleSelectPortfolio = (portfolio) => {
+    setActivePortfolio(portfolio)
+    setIsPortfolioClosing(false)
+    setIsPanelCollapsed(true)
+    setIsPanelHoverExpanded(false)
+  }
+
+  const handlePortfolioExit = () => {
+    setActivePortfolio(null)
+    setIsPortfolioClosing(false)
+  }
+
+  const handlePortfolioClose = () => {
+    setIsPortfolioClosing(Boolean(activePortfolio))
+  }
 
   return (
     <main className="dashboard-shell" aria-label="Forty5Park market dashboard">
       <InteractiveMap
         activeMarket={activeMarket}
-        isDetailOpen={Boolean(activeMarket)}
-        isPanelCollapsed={isPanelCollapsed}
+        activePortfolio={activePortfolio}
+        hasMarketDetail={Boolean(activeMarket)}
+        isDetailOpen={Boolean(activeMarket) && !isDetailClosing}
+        isPanelCollapsed={isNavigationCollapsed}
+        isPortfolioPanelOpen={Boolean(activePortfolio)}
       />
       <MarketsPanel
         activeMarket={activeMarket}
-        isCollapsed={isPanelCollapsed}
-        onSelectMarket={setActiveMarket}
-        onToggleCollapsed={() => setIsPanelCollapsed((isCollapsed) => !isCollapsed)}
+        isCollapsed={isNavigationCollapsed}
+        isHoverExpanded={isPanelHoverExpanded}
+        onHoverExpand={() => setIsPanelHoverExpanded(true)}
+        onHoverCollapse={() => setIsPanelHoverExpanded(false)}
+        onPrimaryTabChange={handlePrimaryTabChange}
+        onSelectMarket={handleSelectMarket}
+        onSelectPortfolio={handleSelectPortfolio}
+        onToggleCollapsed={() => {
+          setIsPanelCollapsed((isCollapsed) => !isCollapsed)
+          setIsPanelHoverExpanded(false)
+        }}
       />
-      <MarketDetailPanel market={activeMarket} />
+      <MarketDetailPanel market={activeMarket} isClosing={isDetailClosing} onExit={handleDetailExit} />
+      <PortfolioDetailPanel
+        key={activePortfolio?.id ?? 'portfolio-detail'}
+        portfolio={activePortfolio}
+        isClosing={isPortfolioClosing}
+        onExit={handlePortfolioExit}
+        onRequestClose={handlePortfolioClose}
+      />
     </main>
   )
 }

@@ -81,6 +81,7 @@ The intended product includes a building geolocalization component that lives in
 - Keep grayscale styling on the raster layer paint, not as a CSS filter on the MapLibre canvas, so vector overlays and markers can keep brand color.
 - Market cards are wired to state vector bounds; selecting a card highlights it and fits the map viewport around that state's polygon.
 - The sidepanel can collapse via the sidepanel icon. Expanded state uses the full panel; collapsed state preserves only the `200 x 48` header bar and fades/slides the body out with a subtle transition.
+- A collapsed sidepanel temporarily expands to its content height when its expand icon is hovered, then collapses after the pointer leaves; clicking the icon pins the full viewport-height panel open.
 - Expanded sidepanel height should track the viewport with bottom separation preserved (`16px` desktop, `12px` mobile), rather than staying capped to the original `868px` Figma frame height.
 - Primary, secondary, and filter tabs are stateful with clean hover/press feedback and independent active states.
 - The `Library` primary tab swaps the sidepanel content to the Figma library sections: `125:813` Portfolios, `125:921` Buy Boxes, and `125:984` Developments. The secondary library tabs update list labels, card counts, card titles, and stat rows.
@@ -89,12 +90,15 @@ The intended product includes a building geolocalization component that lives in
 - The `Analysis` primary tab swaps the sidepanel content to the Figma `125:764` analysis section with a start-session row, Sessions label, and four compact session cards.
 - The Markets `Trends` tab follows Figma node `140:776`, with Current/Projected controls, ranked market-cluster cards, and search/sort actions.
 - The Markets `Highlights` tab follows Figma node `140:819`, with the June 2025 summary, ranked Top Markets list, and linked market insights.
+- Selecting a Portfolios card in Library opens the Figma `151:496` portfolio drawer. It is edge-aligned on the right (no viewport inset), slides in/out, and animates its overview KPI values on entry.
 - State cards use subtle hover, keyboard focus, pressed, and selected states; selected cards keep a uniform 1px purple border while fitting the map to the state vector.
 - Selecting a state card opens a right-side market detail panel based on Figma node `121:776`; its title uses the active state name instead of the source Miami MSA title.
+- Leaving the Markets primary tab closes the market detail panel with a short rightward fade/slide transition, then clears the selected market state.
 - The MapLibre attribution and built-in navigation controls are replaced by the custom Figma map controls from node `143:473`; the target button re-centers the active market and the horizontal buttons zoom out/in.
 - Storybook stories cover the reusable controls, market/library/analysis/trend cards, and Market Detail/Highlights panels. The interactive map remains app-only because it needs a live MapLibre instance and state-boundary data.
 - The market detail "View Listings" pill uses the inline SVG exported from Figma node `121:782`.
 - When the detail panel is open, MapLibre `fitBounds` uses right-side padding so the selected state vector is centered between the left sidepanel and the right detail panel.
+- Opening a portfolio collapses the left navigation and gives the edge-aligned portfolio drawer its own `720px` viewport column. The map resizes into the remaining space rather than sitting behind the drawer, recenters the continental US view, and filters the existing state polygon layers to that portfolio's market states. The portfolio overview caps at zoom `2.75`, and camera bounds extend slightly beyond the data bounds, so panel-aware padding keeps highlighted markets in the visible map area.
 - Inter is loaded through `@fontsource/inter` Latin weights 400, 500, and 700 instead of relying on the font being installed on the user's machine.
 - Visible UI text uses typography tokens from `src/index.css`, with `12px` as the readable floor for captions/body text while preserving the compact dashboard density.
 
@@ -133,4 +137,9 @@ The intended product includes a building geolocalization component that lives in
 - 2026-07-14: Added deterministic Inter loading with `@fontsource/inter` and raised visible 10px UI text to tokenized 12px caption/body styles for WCAG readability resilience.
 - 2026-07-14: Added Figma-derived Trends and Highlights content states to the Markets secondary navigation.
 - 2026-07-14: Replaced the visible MapLibre control/attribution UI with Figma-derived custom map controls.
+- 2026-07-16: Linked portfolio detail data to the map; each portfolio now highlights its listed market states with the existing vector fill and outline treatment.
+- 2026-07-16: Changed the portfolio drawer from a map overlay to an adjacent desktop workspace column and collapse the navigation when a portfolio is opened.
+- 2026-07-16: Added temporary, content-height sidepanel expansion on hover and persistent full-height expansion on click.
 - 2026-07-16: Added Storybook 10 for React/Vite, component stories, static-asset support, and browser-based story verification.
+- 2026-07-16: Made the market detail panel close on leaving Markets, with an animated exit rather than an abrupt unmount.
+- 2026-07-16: Added the Figma-derived portfolio detail drawer, including clickable Library portfolios, animated KPIs, and edge-aligned panel motion.
