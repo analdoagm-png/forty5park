@@ -432,7 +432,15 @@ function UnitIcon() {
   )
 }
 
-function InteractiveMap({ activeMarket, activePortfolio, hasMarketDetail, isPanelCollapsed, isDetailOpen, isPortfolioPanelOpen }) {
+function InteractiveMap({
+  activeMarket,
+  activePortfolio,
+  hasMarketDetail,
+  isAnalysisActive,
+  isPanelCollapsed,
+  isDetailOpen,
+  isPortfolioPanelOpen,
+}) {
   const mapContainerRef = useRef(null)
   const mapRef = useRef(null)
   const stateBoundsRef = useRef(new Map())
@@ -528,6 +536,15 @@ function InteractiveMap({ activeMarket, activePortfolio, hasMarketDetail, isPane
 
     mapRef.current.resize()
 
+    if (isAnalysisActive) {
+      mapRef.current.fitBounds(usBounds, {
+        duration: 480,
+        maxZoom: 2.75,
+        padding: { top: 48, right: 48, bottom: 48, left: 48 },
+      })
+      return
+    }
+
     if (!activeMarket || activePortfolio) {
       mapRef.current.fitBounds(usBounds, {
         duration: activePortfolio ? 700 : 360,
@@ -540,10 +557,10 @@ function InteractiveMap({ activeMarket, activePortfolio, hasMarketDetail, isPane
         },
       })
     }
-  }, [activeMarket, activePortfolio, isDetailOpen, isPanelCollapsed])
+  }, [activeMarket, activePortfolio, isAnalysisActive, isDetailOpen, isPanelCollapsed])
 
   useEffect(() => {
-    if (activeMarket && !activePortfolio && mapRef.current && stateBoundsReady) {
+    if (activeMarket && !activePortfolio && !isAnalysisActive && mapRef.current && stateBoundsReady) {
       const stateBounds = stateBoundsRef.current.get(activeMarket.name)
 
       if (!stateBounds) {
@@ -561,7 +578,33 @@ function InteractiveMap({ activeMarket, activePortfolio, hasMarketDetail, isPane
         },
       })
     }
-  }, [activeMarket, activePortfolio, isDetailOpen, isPanelCollapsed, stateBoundsReady])
+  }, [activeMarket, activePortfolio, isAnalysisActive, isDetailOpen, isPanelCollapsed, stateBoundsReady])
+
+  useEffect(() => {
+    const map = mapRef.current
+
+    if (!map) {
+      return
+    }
+
+    if (isAnalysisActive) {
+      map.boxZoom.disable()
+      map.dragPan.disable()
+      map.doubleClickZoom.disable()
+      map.keyboard.disable()
+      map.scrollZoom.disable()
+      map.touchZoomRotate.disable()
+      return
+    }
+
+    map.boxZoom.enable()
+    map.dragPan.enable()
+    map.doubleClickZoom.enable()
+    map.keyboard.enable()
+    map.scrollZoom.enable()
+    map.touchZoomRotate.enable()
+    map.touchZoomRotate.disableRotation()
+  }, [isAnalysisActive])
 
   useEffect(() => {
     const map = mapRef.current
@@ -570,14 +613,28 @@ function InteractiveMap({ activeMarket, activePortfolio, hasMarketDetail, isPane
       return
     }
 
-    const stateNames = activePortfolio
+    const stateNames = isAnalysisActive
+      ? []
+      : activePortfolio
       ? [...new Set(activePortfolio.markets.flatMap((market) => market.states))]
       : highlightedStateNames
     const filter = ['in', ['get', 'name'], ['literal', stateNames]]
 
     map.setFilter('highlighted-state-fill', filter)
     map.setFilter('highlighted-state-line', filter)
-  }, [activePortfolio, stateBoundsReady])
+  }, [activePortfolio, isAnalysisActive, stateBoundsReady])
+
+  useEffect(() => {
+    const map = mapRef.current
+
+    if (!map || !stateBoundsReady) {
+      return
+    }
+
+    const visibility = isAnalysisActive ? 'none' : 'visible'
+    map.setLayoutProperty('highlighted-state-fill', 'visibility', visibility)
+    map.setLayoutProperty('highlighted-state-line', 'visibility', visibility)
+  }, [isAnalysisActive, stateBoundsReady])
 
   const centerMapOnActiveMarket = () => {
     const map = mapRef.current
@@ -647,30 +704,33 @@ function InteractiveMap({ activeMarket, activePortfolio, hasMarketDetail, isPane
     >
       <img className="map-fallback" src={mapImage} alt="" aria-hidden="true" />
       <div className="map-canvas" ref={mapContainerRef} />
-      <div
-        className={`map-controls ${
-          isPortfolioPanelOpen ? 'has-portfolio-panel' : hasMarketDetail ? 'has-detail-panel' : ''
-        }`}
-        aria-label="Map controls"
-      >
-        <button
-          className="map-control-button map-center-button"
-          type="button"
-          aria-label="Center map on active selection"
-          disabled={!activeMarket && !activePortfolio}
-          onClick={centerMapOnActiveMarket}
+      <div className={`analysis-map-overlay ${isAnalysisActive ? 'is-visible' : ''}`} aria-hidden="true" />
+      {!isAnalysisActive ? (
+        <div
+          className={`map-controls ${
+            isPortfolioPanelOpen ? 'has-portfolio-panel' : hasMarketDetail ? 'has-detail-panel' : ''
+          }`}
+          aria-label="Map controls"
         >
-          <MapTargetIcon />
-        </button>
-        <div className="map-zoom-controls">
-          <button className="map-control-button" type="button" aria-label="Zoom out" onClick={() => zoomMap('out')}>
-            <ZoomOutIcon />
+          <button
+            className="map-control-button map-center-button"
+            type="button"
+            aria-label="Center map on active selection"
+            disabled={!activeMarket && !activePortfolio}
+            onClick={centerMapOnActiveMarket}
+          >
+            <MapTargetIcon />
           </button>
-          <button className="map-control-button" type="button" aria-label="Zoom in" onClick={() => zoomMap('in')}>
-            <ZoomInIcon />
-          </button>
+          <div className="map-zoom-controls">
+            <button className="map-control-button" type="button" aria-label="Zoom out" onClick={() => zoomMap('out')}>
+              <ZoomOutIcon />
+            </button>
+            <button className="map-control-button" type="button" aria-label="Zoom in" onClick={() => zoomMap('in')}>
+              <ZoomInIcon />
+            </button>
+          </div>
         </div>
-      </div>
+      ) : null}
     </div>
   )
 }
@@ -1319,9 +1379,11 @@ function App() {
   const [isPortfolioClosing, setIsPortfolioClosing] = useState(false)
   const [isPanelCollapsed, setIsPanelCollapsed] = useState(false)
   const [isPanelHoverExpanded, setIsPanelHoverExpanded] = useState(false)
+  const [activePrimaryTab, setActivePrimaryTab] = useState('Markets')
   const isNavigationCollapsed = isPanelCollapsed && !isPanelHoverExpanded
 
   const handlePrimaryTabChange = (tab) => {
+    setActivePrimaryTab(tab)
     setIsDetailClosing(tab !== 'Markets' && Boolean(activeMarket))
     setIsPortfolioClosing(tab !== 'Library' && Boolean(activePortfolio))
   }
@@ -1358,6 +1420,7 @@ function App() {
         activeMarket={activeMarket}
         activePortfolio={activePortfolio}
         hasMarketDetail={Boolean(activeMarket)}
+        isAnalysisActive={activePrimaryTab === 'Analysis'}
         isDetailOpen={Boolean(activeMarket) && !isDetailClosing}
         isPanelCollapsed={isNavigationCollapsed}
         isPortfolioPanelOpen={Boolean(activePortfolio)}

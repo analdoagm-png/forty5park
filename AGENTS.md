@@ -88,6 +88,7 @@ The intended product includes a building geolocalization component that lives in
 - The Library list header search button has its own search state based on Figma node `132:601`; it swaps the list header for a 288px search field plus an empty-state panel, and does not affect the top header search icon.
 - The sidepanel list search component is shared by Markets and Library. Its empty-state icon is exported inline from Figma node `135:516`, and the search field/empty panel use subtle opacity and transform animations.
 - The `Analysis` primary tab swaps the sidepanel content to the Figma `125:764` analysis section with a start-session row, Sessions label, and four compact session cards.
+- The Analysis tab centers a static continental US map, hides the state vector layers and map controls, disables panning/zoom gestures, and adds a dark overlay so the analytical workflow takes visual focus.
 - The Markets `Trends` tab follows Figma node `140:776`, with Current/Projected controls, ranked market-cluster cards, and search/sort actions.
 - The Markets `Highlights` tab follows Figma node `140:819`, with the June 2025 summary, ranked Top Markets list, and linked market insights.
 - Selecting a Portfolios card in Library opens the Figma `151:496` portfolio drawer. It is edge-aligned on the right (no viewport inset), slides in/out, and animates its overview KPI values on entry.
@@ -140,6 +141,7 @@ The intended product includes a building geolocalization component that lives in
 - 2026-07-16: Linked portfolio detail data to the map; each portfolio now highlights its listed market states with the existing vector fill and outline treatment.
 - 2026-07-16: Changed the portfolio drawer from a map overlay to an adjacent desktop workspace column and collapse the navigation when a portfolio is opened.
 - 2026-07-16: Added temporary, content-height sidepanel expansion on hover and persistent full-height expansion on click.
+- 2026-07-16: Added an Analysis map state that hides vectors and darkens the basemap.
 - 2026-07-16: Added Storybook 10 for React/Vite, component stories, static-asset support, and browser-based story verification.
 - 2026-07-16: Made the market detail panel close on leaving Markets, with an animated exit rather than an abrupt unmount.
 - 2026-07-16: Added the Figma-derived portfolio detail drawer, including clickable Library portfolios, animated KPIs, and edge-aligned panel motion.
